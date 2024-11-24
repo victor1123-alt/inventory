@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <style>
+            .card {
+                background-color: transparent !important;
+                box-shadow: none !important;
+                min-height: 350px;
+                max-height: 350px;
+                /* border: none !important; */
+            }
+
+            .card-img-overlay {
+                background-color: #cfe8ff8e;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
+
+            .card:hover .card-img-overlay {
+                opacity: 1;
+                overflow: hidden;
+            }
+
+
+            .card:hover img {
+                transform: scale(110%);
+            }
+
+            img {
+                overflow-x: hidden;
+                transition: 1s all;
+                object-fit: contain;
+                height: 100%;
+            }
+
+            .brand-name {
+                font-size: 1.5rem;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="bg-light w-100" style="min-width: 576px;">
+        <%- include('../partials/navbar.ejs') %>
+            <div class="row mt-5 ">
+                <%- include('../partials/sidebar.ejs') %>
+                    <div class="col min-vh-100 pt-4 ">
+
+                        <div class="container py-5 bg-white mx-3 my-4">
+                            <div class="text-end mb-4">
+                                <div>
+                                    <b>Dashboard ></b><a href="" class="text-decoration-none">Inventory</a>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 myphonecontainer">
+
+                                <!-- Apple Card -->
+                               <% phones.forEach(phone=>{ %>
+                                <div class="col-3 mx-1 bg-transperent" >
+                                   <a href="/api/customers/models/<%- phone.phone_id %>">
+                                    <div class="card h-100 pointer" style="overflow: hidden;">
+                                        <img src="/img/category/<%- phone.imageUrl %>"
+                                            class="card-img-top" alt="<%-phone.brand %>">
+                                        <div class="card-img-overlay pointer d-flex ">
+                                            <div class="brand-name"><%-phone.brand %></div>
+                                        </div>
+                                    </div>
+                                   </a>
+                                </div>
+
+                            <% }) %>
+                            </div>
+                            <div class="d-flex">
+                                <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addInvent">Add
+                                    Inventory +</div>
+                                <div class="btn btn-primary ms-3" id="refreshButton">refresh</div>
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal w-100 " id="addInvent">
+                <div class="modal-dialog modal-lg  modal-dialog-centered">
+                    <div class="bg-white  container-fluid  p-sm-4 modal-content" style="border-radius: 20px;">
+                        <div class=" text-center fw-bold fs-3 py-3">
+                            Add Phone Brand
+                        </div>
+                        <div class="">
+                            <form action="" name="addPhoneBrand">
+                                <div class="row align-items-baseline">
+                                    <div class="mb-4 col-12">
+                                        <label for="name" class="form-label fw-bold">
+                                            Brand Name</label>
+                                        <input type="text" class="form-control" name="brand"
+                                            aria-labelledby="brand-err">
+                                        <div class="form-text text-danger err" id="brand-err" data-err="brand"></div>
+                                    </div>
+                                    <div class="mb-4 col-12">
+                                        <label for="name" class="form-label fw-bold"> description</label>
+                                        <input type="text" class="form-control" name="description"
+                                            aria-labelledby="description">
+                                        <div class="form-text text-danger err" id="description" data-err="description">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="name" class="form-label fw-bold"> image link </label>
+                                    <input type="file" class="form-control" name="imageUrl" aria-labelledby="imageUrl">
+                                    <div class="form-text text-danger err" id="imageUrl" data-err="imageUrl">
+                                    </div>
+                                </div>
+
+
+                                <div class="text-center px-5">
+                                    <button class="btn btn-primary w-75 ">Add Phone Brand</button>
+                                </div>
+                            </form>
+                            <div class="position-fixed bottom-0 end-0 p-3 " style="z-index: 11000">
+                                <div id="liveToast" class="mytoast d-none modal-content " role="alert"
+                                    aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                                    <div class="toast-header border-5 border-success">
+                                        <img src="..." class="rounded me-2" alt="...">
+                                        <strong class="me-auto">success !!!</strong>
+                                    </div>
+                                    <div class="toast-body">
+                                        A user added successfully
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script>
+        const phones = <%- JSON.stringify(phones) %>
+     </script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/inventory.js" type="module"> </script>
+</body>
