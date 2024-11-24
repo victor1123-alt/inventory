@@ -1,0 +1,12 @@
+POST http://localhost:3000/api/users/signup
+Content-Type: application/json
+
+{
+    "phonenumber":"07072074319",
+    "first_name":"victor",
+    "last_name":"mark",
+    "email":"mkvictor579@gmail.com",
+    "password":"mkyde1123",
+    "address":"iyiowa odepke",
+    "role":"admin"
+}
