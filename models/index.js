@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const dbConfig = require("../config/db.config.js");
+const url = "mysql://root:cYYWexYqmCzLvhrWdCVTAssMphfVknZP@mysql.railway.internal:3306/railway"
 
-
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const sequelize = new Sequelize(url, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
 });
