@@ -18,8 +18,8 @@ app.listen(PORT, () => {
 // Import Routes
 const customerRoutes = require('./routes/customer.routes');
 const userRoutes = require('./routes/user.routes');
-const { verifyCookies } = require('./middleware/verifyjwt');
-app.use('/api/customers', verifyCookies,customerRoutes);
+const { verifyCookies, isStaff } = require('./middleware/verifyjwt');
+app.use('/api/customers', verifyCookies,isStaff,customerRoutes);
 app.use('/api/users',userRoutes);
 
 // Sync database and start server

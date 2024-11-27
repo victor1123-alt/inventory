@@ -16,11 +16,15 @@ const handleValidationErr = (error)=>{
 }
 // Add a new customer
 exports.addCustomer = async (req, res) => {
-
-    const {first_name,last_name,email,address,phone_number} = req.body
+    const user = req.user
+    const {first_name,last_name,email,address,phone_number} = req.body;
     try {
-        const customer = await Customer.create({first_name,last_name,email,address,phone_number});
+        const adminactivity = await db.AdminActivity.create({admin_activity:"added customer",user_id:req.user.user_id})
+        
+
+        const customer = await Customer.create({admin_id:req.user.user_id,first_name,last_name,email,address,phone_number});
         res.status(201).send(customer);
+
     } catch (error) {
         res.status(500).send(handleValidationErr(error.errors));
     }
@@ -29,7 +33,8 @@ exports.addCustomer = async (req, res) => {
 // Get all customers
 exports.getCustomers = async (req, res) => {
     try {
-        const customers = await Customer.findAll();
+        const customers = await Customer.findAll({include:[{model:db.Users}]});
+        
         res.status(200).render('customer',{customers})
     } catch (error) {
         res.status(500).send({ message: error.message }); 
@@ -42,7 +47,7 @@ exports.getCustomerOrders = async (req, res) => {
         const customerId = req.params.customerId;
         const orders = await Sale.findAll({
             where: { customer_id: customerId },
-            // include: [{ model: Phone, attributes: ['brand', 'model', 'price'] }]
+            include: [{ model: Customer },{model:db.Users}]
         });
         res.status(200).render('signlecustomer',{orders});
     } catch (error) {
@@ -55,7 +60,7 @@ exports.getCustomerInventory = async (req, res) => {
         const Inventory= req.params.inventoryId;
         const orders = await Sale.findOne({
             where: { sale_id: Inventory },
-            include: [{ model: Customer }]
+            include: [{ model: Customer },{model:db.Users}]
 
         });        
 
@@ -70,7 +75,9 @@ exports.PostCustomerOrders = async (req, res) => {
     try {
         console.log(req.body);
         
-        const sales = await Sale.create(req.body);
+        const sales = await Sale.create({...req.body,admin_id:req.user.user_id});
+        const adminactivity = await db.AdminActivity.create({admin_activity:"added sales",user_id:req.user.user_id})
+
          // Fetch the updated list of sales
         
         res.status(200).json(sales)
@@ -84,7 +91,7 @@ exports.PostCustomerOrders = async (req, res) => {
 exports.getSales = async (req,res) =>{
     try {
         const updatedSales = await Sale.findAll({
-            include:[{model:Customer}]
+            include:[{model:Customer},{model:db.Users}]
         }); // Or any other query to get sales
 
         res.status(200).json(updatedSales)
@@ -107,7 +114,7 @@ exports.getAllPhones = async (req,res) =>{
 
 exports.getAllCustomers = async (req,res) =>{
     try {
-        const customers = await Customer.findAll(); // Or any other query to get sales
+        const customers = await Customer.findAll({include:[{model:db.Users}]}); // Or any other query to get sales
 
         res.status(200).json(customers)
     } catch (error) {
@@ -118,7 +125,7 @@ exports.getAllCustomers = async (req,res) =>{
 
 exports.getmyphonemodels = async (req,res) =>{
     try {
-        const phonemodel = await db.PhoneModel.findAll(); // Or any other query to get sales
+        const phonemodel = await db.PhoneModel.findAll({include:[{model:db.Users}]}); // Or any other query to get sales
 
         res.status(200).json(phonemodel)
     } catch (error) {
@@ -126,65 +133,159 @@ exports.getmyphonemodels = async (req,res) =>{
         
     }
 }
+exports.getmyadminactivity = async (req,res) =>{
+    try {
+        const adminactivity = await db.AdminActivity.findAll({include:[{model:db.Users}]}); // Or any other query to get sales
+
+        res.status(200).render('adminaction',{adminactivity})
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+exports.addAdmin = async (req,res) =>{
+    try {
+        // const adminactivity = await db.AdminActivity.findAll({include:[{model:db.Users}]}); // Or any other query to get sales
+
+        res.status(200).render('addadmin',{admin:req.user})
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+// exports.adminAction = async (req,res) =>{
+//     try {
+//         const adminactivity = await db.AdminActivity.findAll({include:[{model:db.Users}]}); // Or any other query to get sales
+
+//         res.status(200).render('adminaction',{adminactivity})
+//     } catch (error) {
+//         console.log(error);
+        
+//     }
+// }
+
+exports.viewAllAdmins = async (req,res) =>{
+    try {
+        const admins = await db.Users.findAll({where:{role:{[Op.or]:["staff","admin"]}}}); // Or any other query to get sales
+
+        res.status(200).render('viewadmin',{admins})
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+exports.myprofile = async (req,res) =>{
+    try {
+        // const adminactivity = await db.AdminActivity.findAll({include:[{model:db.Users}]}); // Or any other query to get sales
+
+        res.status(200).render('profile',{user:req.user})
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+exports.editProfile =  async (req, res) => {
+    const userId = req.params.id; // Extract user ID from the request URL
+    const updates = req.body; // Extract updates from the request body
+
+    try {
+        // Find user by ID
+        const user = await db.Users.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // Update user details
+        await user.update(updates);
+
+        // Return updated user
+        res.status(200).json({ message: "User updated successfully", user });
+    } catch (error) {
+        // Handle validation or other errors
+        res.status(400).json({ error: error.message });
+    }
+}
+
+
 // Download orders in Excel
 exports.downloadOrders = async (req, res) => {
     try {
-        const customerId = req.params.customerId;
-        const orders = await Sale.findAll({
-            where: { customer_id: customerId },
-            include: [{ model: Phone, attributes: ['brand', 'model', 'price'] }]
-        });
+        const { sale_id } = req.params;
 
+        // Fetch the specific sale
+        const sale = await Sale.findOne({where:{sale_id}});
+
+        if (!sale) {
+            return res.status(404).send({ message: 'Sale not found' });
+        }
+
+        // Create a workbook and worksheet
         const workbook = new ExcelJS.Workbook();
-        const worksheet = workbook.addWorksheet('Orders');
+        const worksheet = workbook.addWorksheet('Sale Report');
 
+        // Define columns
         worksheet.columns = [
-            { header: 'Order ID', key: 'sale_id', width: 10 },
-            { header: 'Brand', key: 'brand', width: 15 },
-            { header: 'Model', key: 'model', width: 20 },
-            { header: 'Quantity', key: 'quantity_sold', width: 10 },
-            { header: 'Total Price', key: 'total_price', width: 15 },
-            { header: 'Sale Date', key: 'sale_date', width: 15 }
+            { header: 'Sale ID', key: 'sale_id', width: 10 },
+            { header: 'Customer ID', key: 'customer_id', width: 15 },
+            { header: 'Item Details', key: 'items', width: 30 },
+            { header: 'Status', key: 'status', width: 15 },
+            { header: 'Created At', key: 'created_at', width: 20 },
+            { header: 'Updated At', key: 'updated_at', width: 20 },
         ];
 
-        orders.forEach(order => {
-            worksheet.addRow({
-                sale_id: order.sale_id,
-                brand: order.Phone.brand,
-                model: order.Phone.model,
-                quantity_sold: order.quantity_sold,
-                total_price: order.total_price,
-                sale_date: order.sale_date
-            });
+        // Parse `allitems` JSON field
+        const allitems = sale.allitems || [];
+        const items = Array.isArray(allitems)
+            ? allitems.map(item => `${item.name || 'N/A'} x${item.quantity || 0}`).join(', ')
+            : 'N/A';
+
+        // Add row for the single sale
+        worksheet.addRow({
+            sale_id: sale.sale_id,
+            customer_id: sale.customer_id,
+            items: items,
+            status: sale.status,
+            created_at: sale.createdAt.toISOString(),
+            updated_at: sale.updatedAt.toISOString(),
         });
 
+        // Set response headers for file download
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
         res.setHeader(
             'Content-Type',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         );
         res.setHeader(
             'Content-Disposition',
-            'attachment; filename=' + 'CustomerOrders.xlsx'
+            `attachment; filename=SaleReport-${sale_id}-${timestamp}.xlsx`
         );
 
+        // Write workbook to response
         await workbook.xlsx.write(res);
         res.status(200).end();
     } catch (error) {
-        res.status(500).send({ message: error.message });
+        console.error(error);
+        res.status(500).send({ message: 'An error occurred while generating the sale report.' });
     }
 };
 
 exports.dashboard = async (req,res)=>{
+    
  try {
     const phones =await Phone.findAll({
         include:[{model:db.PhoneModel}]
     });
 
     const customers =await Customer.findAll();
+    
     console.log(customers);
     
     const sales =  await Sale.findAll({
-        include:[{model:Customer}]
+        include:[{model:Customer},{model:db.Users}]
     })
     res.render('index',{sales,phones,customers})
  } catch (error) {
@@ -213,7 +314,7 @@ exports.getPhonesModels = async (req, res) => {
             where:{
                 phone_id:id
             },
-            include:[{model:db.PhoneModel}]
+            include:[{model:db.PhoneModel},{model:db.Users}]
         })
         // const phones = await Phone.findAll();
         console.log({myphone});
@@ -227,6 +328,7 @@ exports.getPhonesModels = async (req, res) => {
 const path = require('path');
 const phoneModel = require("../models/phone.model");
 const saleModel = require("../models/sale.model");
+const { Op } = require("sequelize");
 
 // Create a new phone brand with an uploaded image
 exports.createPhoneBrand = async (req, res) => {
@@ -234,12 +336,13 @@ exports.createPhoneBrand = async (req, res) => {
     
   try {
     const { name, description } = req.body;
+    const adminactivity = await db.AdminActivity.create({admin_activity:"added inventory",user_id:req.user.user_id})
 
     // Check if the image file exists in the request
     const imageUrl = req.file ? req.file.filename : null;  // Store the relative file path
 
     // Create the phone brand with the image URL
-    const phoneBrand = await Phone.create({ brand:name, description, imageUrl });
+    const phoneBrand = await Phone.create({admin_id:req.user.user_id, brand:name, description, imageUrl });
 
     res.status(201).json(phoneBrand);
   } catch (error) {
@@ -253,7 +356,8 @@ exports.createPhoneModel = async (req,res)=>{
     try {
         console.log(req.body);
         
-        const phoneModel = db.PhoneModel.create(req.body);
+        const phoneModel = db.PhoneModel.create({...req.body,admin_id:req.user.user_id});
+        const adminactivity = await db.AdminActivity.create({admin_activity:"added phone",user_id:req.user.user_id})
 
         res.status(200).json(phoneModel)
     } catch (error) {

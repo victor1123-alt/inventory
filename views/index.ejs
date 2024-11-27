@@ -66,13 +66,13 @@
 
                         </div>
                         <div class="bg-white mt-5 px-4 mx-4 rounded-3 py-3">
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between"> 
                                 <div class="fs-4 text-primary fw-bold">
                                     Recent Orders
                                 </div>
                                 <ul class="d-flex justify-content-around w-50 align-items-center"
                                     style="list-style: none;">
-                                    <li class=" bg-light rounded-pill py-1 w-50 row p"><input type="text" name=""
+                                    <li class=" bg-light rounded-pill py-1 w-50 row p"><input type="text" name="" id="search"
                                             class="outline-none ps-3   border-none col-8 rounded-pill bg-light" id="">
                                         <div class="col-4 flex-column justify-content-center align-items-center d-flex">
                                             <img src="/img/Search.png" alt="">
@@ -81,12 +81,11 @@
                                     <li class="px-sm-4 pointer text-end dropdown">
                                         <img width="30px" src="/img/Filter.png"  alt="" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         <ul class="dropdown-menu">
-                                            <li><a href="#" class="dropdown-item">customer name</a></li>
-                                            <li><a href="#" class="dropdown-item">item purchased</a></li>
-                                            <li><a href="#" class="dropdown-item">order id</a></li>
-                                            <li><a href="#" class="dropdown-item">purchased</a></li>
-                                            <li><a href="" class="dropdown-item">total revenue</a></li>
-                                            <li><a href="#" class="dropdown-item">customer phone</a></li>
+                                            <li><a href="#" class="dropdown-item"><label for="customer-name">customer name</label></a></li>
+                                            <li><a href="#" class="dropdown-item"><label for="item-purchased">item purchased</label></a></li>
+                                            <li><a href="#" class="dropdown-item"><label for="purchased">purchased</label></a></li>
+                                            <li><a href="" class="dropdown-item"><label for="revenue">total revenue</label></a></li>
+                                            <li><a href="#" class="dropdown-item"><label for="phone">customer phone</label></a></li>
                                         </ul>
                                     </li>
                                     <li class="px-sm-4 pointer text-end " data-bs-toggle="modal"
@@ -108,6 +107,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <div style="max-height: 50px !important; display: block;background-color: red;">
 
                                         <% sales.forEach((sale,index)=>{%>
                                             <tr class="<%- index % 2 != 0 ? 'bg-default-blue':'' %>">
@@ -130,6 +130,7 @@
                                                         class="btn btn-sm btn-primary">print</a></td>
                                             </tr>
                                             <%})%>
+                                        </div>
 
                                     </tbody>
 
@@ -186,6 +187,7 @@
                                                 <div class="col ">
                                                     <div class="fw-bold">Total revenue (#)</div>
                                                     <div class=""><input type="text"
+                                                        name="revenue"
                                                             class="form-input w-100 py-1 revenue">
                                                     </div>
                                                 </div>
@@ -201,12 +203,18 @@
                             </div>
                         </div>
                     </div>
-
+                    <form action="" name="filter" class="d-none">
+                        <input type="radio" name="filtertype" id="customer-name" value="first_name">
+                        <input type="radio" name="filtertype" id="item-purchased" value="createdAt">
+                        <input type="radio" name="filtertype" id="order-id" value="sale_id">
+                        <!-- <input type="radio" name="filtertype" id="revenue" value="revenue"> -->
+                        <input type="radio" name="filtertype" id="phone" value="phone">
+                    </form>
             </div>
     </div>
     <script>
-        const myphones = <% - JSON.stringify(phones) %>
-        const sales = <% - JSON.stringify(sales) %>
+        const myphones = <%- JSON.stringify(phones) %>
+        const sales = <%- JSON.stringify(sales) %>
 
             console.log(sales);
 

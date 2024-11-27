@@ -26,7 +26,7 @@ const verifyCookies = (req, res, next) => {
       
 
       const user = await Users.findOne({where:{user_id:decoded.id}})
-      console.log(user);
+      // console.log(user);
       
       req.user = user; // Attach decoded token data to req object
       next(); // Proceed to the next middleware
@@ -34,12 +34,14 @@ const verifyCookies = (req, res, next) => {
 };
 
 const isStaff = (req, res, next) => {
-  if (req.user.role !== 'staff' || req.user.role !== "admin") {
-    console.log(req.user);
+  if (req.user.role == 'staff' || req.user.role == "admin") {
+    next(); // Proceed if the user is an admin
+
+  }else{
+    console.log(req.user.role == "admin");
     
       return res.status(403).redirect("/api/users/login")
   }
-  next(); // Proceed if the user is an admin
 };
 
 const isAdmin = (req, res, next) => {
