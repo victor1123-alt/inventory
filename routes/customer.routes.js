@@ -20,7 +20,9 @@ router.get('/adminactivity',customerController.getmyadminactivity);
 router.get('/addadmin',customerController.addAdmin)
 router.get('/viewadmin',customerController.viewAllAdmins)
 router.get('/myprofile',customerController.myprofile)
-router.put("/users/:id",customerController.editProfile)
+router.put("/users/:id",customerController.editProfile);
+router.delete('/deleteinvent/:id', customerController.deletePhone);
+
 // home page view routes
 
 router.get('/',customerController.dashboard)

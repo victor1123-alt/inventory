@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="col d-flex justify-content-center align-items-center flex-column p-4  ">
                                     <div class="fw-bold fs-3">
-                                        100
+                                        <%- totalinventory %>
                                     </div>
                                     <div class="mt-2">
                                         inventory
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="col d-flex justify-content-center align-items-center flex-column p-4 ">
                                     <div class="fw-bold fs-3">
-                                        1300
+                                        <%- totalcustomers %>
                                     </div>
                                     <div class="mt-2">
                                         customer
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col d-flex justify-content-center align-items-center flex-column p-4 ">
                                     <div class="fw-bold fs-3">
-                                        2000
+                                        <%- totalsales %>
                                     </div>
                                     <div class="mt-2">
                                         sales
@@ -205,10 +205,10 @@
                     </div>
                     <form action="" name="filter" class="d-none">
                         <input type="radio" name="filtertype" id="customer-name" value="first_name">
-                        <input type="radio" name="filtertype" id="item-purchased" value="createdAt">
-                        <input type="radio" name="filtertype" id="order-id" value="sale_id">
-                        <!-- <input type="radio" name="filtertype" id="revenue" value="revenue"> -->
-                        <input type="radio" name="filtertype" id="phone" value="phone">
+                        <input type="radio" name="filtertype" id="item-purchased" value="item">
+                        <input type="radio" name="filtertype" id="order-id" value="createdAt">
+                        <input type="radio" name="filtertype" id="revenue" value="revenue">
+                        <input type="radio" name="filtertype" id="phone" value="phone_number">
                     </form>
             </div>
     </div>

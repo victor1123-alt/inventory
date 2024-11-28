@@ -35,21 +35,42 @@ async function fetchSalesDatas(x,y) {
 
         // Populate the table with updated sales data
         sales.forEach((sale, index) => {
-           if(sale[x].includes(y) || sale.Customer[x].includes(y)) {
+           if(sale[x]?.includes(y) || sale?.Customer[x]?.includes(y)) {
                
             const row = document.createElement('tr');
             row.classList.add(index % 2 === 0 ? 'bg-default-blue' : 'myclass');
+            let itemprice = 0
 
+            sale.allitems.forEach((item)=>{itemprice += item.price * item.qty})
+            row.innerHTML = `
+            <td class="py-4 px-2">${sale.Customer.first_name} ${sale.Customer.last_name}</td>
+            <td class="py-4 px-2 text-center">${myphones.find(id=> id.phone_id ==  sale.allitems[0].brand).brand} ${sale.allitems[0].model}...</td>
+            <td class="py-4 px-2 text-center">ORD-${sale.sale_id}</td>
+            <td class="py-4 px-2 text-center">${sale.createdAt}</td>
+            <td class="py-4 px-2 text-center"> ${itemprice}</td>
+            <td class="py-4 px-2 text-center"><a href="#" class="btn btn-sm btn-primary">print</a></td>
+        `;
+        tableBody.appendChild(row);
+           } else if(x == "item"){
+            sale.allitems.forEach((item)=>{
+                if (item.model.includes(y) || item.part.includes(y)) {
+                        
+            const row = document.createElement('tr');
+            row.classList.add(index % 2 === 0 ? 'bg-default-blue' : 'myclass');
+            let itemprice = 0
+            sale.allitems.forEach((item)=>{itemprice += item.price * item.qty})
             row.innerHTML = `
                 <td class="py-4 px-2">${sale.Customer.first_name} ${sale.Customer.last_name}</td>
-                <td class="py-4 px-2">${myphones.find(id=> id.phone_id ==  sale.allitems[0].brand).brand} ${sale.allitems[0].model}...</td>
-                <td class="py-4 px-2">ORD-${sale.sale_id}</td>
-                <td class="py-4 px-2">${sale.createdAt}</td>
-                <td class="py-4 px-2">${sale.totalRevenue}</td>
-                <td class="py-4 px-2"><a href="#" class="btn btn-sm btn-primary">print</a></td>
+                <td class="py-4 px-2 text-center">${myphones.find(id=> id.phone_id ==  sale.allitems[0].brand).brand} ${sale.allitems[0].model}...</td>
+                <td class="py-4 px-2 text-center">ORD-${sale.sale_id}</td>
+                <td class="py-4 px-2 text-center">${sale.createdAt}</td>
+                <td class="py-4 px-2 text-center"> ${itemprice}</td>
+                <td class="py-4 px-2 text-center"><a href="#" class="btn btn-sm btn-primary">print</a></td>
             `;
             tableBody.appendChild(row);
-           }else {
+                }
+            })
+           }   else {
             
            }
         });
@@ -116,15 +137,17 @@ async function fetchSalesData(x,y) {
             
             const row = document.createElement('tr');
             row.classList.add(index % 2 === 0 ? 'bg-default-blue' : 'myclass');
-
+            let itemprice = 0
+            sale.allitems.forEach((item)=>{itemprice += item.price * item.qty})
+            
             row.innerHTML = `
-                <td class="py-4 px-2">${sale.Customer.first_name} ${sale.Customer.last_name}</td>
-                <td class="py-4 px-2">${myphones.find(id=> id.phone_id ==  sale.allitems[0].brand).brand} ${sale.allitems[0].model}...</td>
-                <td class="py-4 px-2">ORD-${sale.sale_id}</td>
-                <td class="py-4 px-2">${sale.createdAt}</td>
-                <td class="py-4 px-2">${sale.totalRevenue}</td>
-                <td class="py-4 px-2"><a href="#" class="btn btn-sm btn-primary">print</a></td>
-            `;
+            <td class="py-4 px-2">${sale.Customer.first_name} ${sale.Customer.last_name}</td>
+            <td class="py-4 px-2 text-center">${myphones.find(id=> id.phone_id ==  sale.allitems[0].brand).brand} ${sale.allitems[0].model}...</td>
+            <td class="py-4 px-2 text-center">ORD-${sale.sale_id}</td>
+            <td class="py-4 px-2 text-center">${sale.createdAt}</td>
+            <td class="py-4 px-2 text-center"> ${itemprice}</td>
+            <td class="py-4 px-2 text-center"><a href="#" class="btn btn-sm btn-primary">print</a></td>
+        `;
             tableBody.appendChild(row);
         });
     } catch (error) {

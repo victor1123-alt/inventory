@@ -1,4 +1,4 @@
-import { PostApi, PostFileApi } from "./api.js";
+import { clearinputs, PostApi, PostFileApi } from "./api.js";
 
 document.getElementById("refreshButton").addEventListener("click", async () => {
     try {
@@ -36,6 +36,7 @@ addPhoneBrand.onsubmit = (e) => {
     const description = addPhoneBrand.description.value;
     const imageUrl = addPhoneBrand.imageUrl.files[0];
 
+    addPhoneBrand.querySelector('.btn').innerHTML = "...loading"
     console.log(imageUrl);
 
     const formData = new FormData();
@@ -46,14 +47,19 @@ addPhoneBrand.onsubmit = (e) => {
 
     PostFileApi('/api/customers/phone-brands', formData,
         (x) => {
+            addPhoneBrand.querySelector('.btn').innerHTML = "Add Phone Brand"
+
             document.querySelector('.mytoast').classList.remove('d-none');
             fetchPhoneBrands()
+            clearinputs(addPhoneBrand.brand,addPhoneBrand.description,addPhoneBrand.imageUrl)
             setTimeout(() => {
                 
                 document.querySelector('.mytoast').classList.add('d-none');
                 
-            }, 5000);
+            }, 4000);
         }, (x) => {
+            addPhoneBrand.querySelector('.btn').innerHTML = "Add Phone Brand"
+
             x.forEach((err) => {
 
                 if (err.type == "Validation error") {
@@ -109,3 +115,62 @@ async function fetchPhoneBrands() {
         console.error('Error fetching sales data:', error);
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    let selectedPhoneId = null; // Store the phone ID for deletion
+
+    // Event listener for delete buttons
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            selectedPhoneId = event.target.dataset.id; // Get phone ID
+            // Show the modal
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            deleteModal.show();
+        });
+    });
+
+    // Confirm delete button inside the modal
+    document.getElementById('confirmDelete').addEventListener('click', async () => {
+        const passwordInput = document.getElementById('deletePassword');
+        const passwordError = document.getElementById('passwordError');
+        const password = passwordInput.value.trim();
+
+        // Validate password
+        if (!password) {
+            passwordError.classList.remove('d-none');
+            return;
+        }
+
+        passwordError.classList.add('d-none'); // Hide error if validation passes
+
+        try {
+            // Send DELETE request with password
+            const response = await fetch(`/delete/${selectedPhoneId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ password }),
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                // Remove phone card from DOM
+                const phoneCard = document.querySelector(`.delete-btn[data-id="${selectedPhoneId}"]`).closest('.col-3');
+                phoneCard.remove();
+
+                alert(result.message || 'Phone deleted successfully.');
+
+                // Close the modal
+                const deleteModalInstance = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+                deleteModalInstance.hide();
+            } else {
+                alert(result.message || 'Failed to delete the phone.');
+            }
+        } catch (error) {
+            console.error('Error deleting phone:', error);
+            alert('An error occurred while deleting the phone.');
+        }
+    });
+});

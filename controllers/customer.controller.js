@@ -2,6 +2,8 @@ const db = require("../models");
 const Customer = db.Customer;
 const Sale = db.Sale;
 const Phone = db.phoneBrand;
+const bcrypt = require('bcrypt');
+
 const ExcelJS = require('exceljs');
 
 const handleValidationErr = (error)=>{
@@ -281,13 +283,16 @@ exports.dashboard = async (req,res)=>{
     });
 
     const customers =await Customer.findAll();
-    
+    const totalcustomers = await Customer.count()
+    const totalinventory= await Phone.count()
+    const totalsales = await Sale.count()
+
     console.log(customers);
     
     const sales =  await Sale.findAll({
         include:[{model:Customer},{model:db.Users}]
     })
-    res.render('index',{sales,phones,customers})
+    res.render('index',{sales,phones,customers,totalcustomers,totalinventory,totalsales})
  } catch (error) {
     console.log(error);
     
@@ -367,4 +372,33 @@ exports.createPhoneModel = async (req,res)=>{
     }
 }
 
+exports.deletePhone = async (req, res) => {
+    const phoneId = req.params.id; // Get the ID from the route parameter
+    const { password } = req.body; // Get the password from the request body
+    const user = req.user;
+    try {
+        
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+      // Check if password is correct
+      if (!isPasswordValid) {
+        return res.status(401).json({ success: false, message: 'Invalid password.' });
+      }
+  
+      // Delete the phone from the database
+      const result = await Phone.destroy({
+        where: { phone_id: phoneId }, // Match the ID column
+      });
+  
+      if (result) {
+        res.status(200).json({ success: true, message: 'Phone deleted successfully.' });
+      } else {
+        res.status(404).json({ success: false, message: 'Phone not found.' });
+      }
+    } catch (error) {
+      console.error('Error deleting phone:', error);
+      res.status(500).json({ success: false, message: 'Internal Server Error.' });
+    }
+  };
+  
 // Other controllers (e.g., createPhoneModel, createPhone) remain unchanged
