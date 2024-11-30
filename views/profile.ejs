@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <div class="bg-light w-100" style="min-width: 576px;">
+        <%- include('../partials/navbar.ejs') %>
+            <div class="row mt-5 ">
+                <%- include('../partials/sidebar.ejs') %>
+                    <div class="col min-vh-100 pt-4">
+                        <div class="bg-white mt-4 mb-4 px-4 mx-4 rounded-3 py-3">
+                            <div class="text-end p-4 pb-4">
+                                <span class="fw-bold">Dashboard ></span> <a href=""
+                                    class="text-decoration-none">admin profile</a>
+                            </div>
+                            <div >
+
+                                <div class="text-center fs-4 text-primary fw-bold">
+                                    admin Details
+                                </div>
+                                
+                            </div>
+                            <div class="container mt-5">
+                                <form action="/users/<%= user.user_id %>?_method=PUT" method="POST">
+                                    <div class="mb-3">
+                                        <label for="first_name" class="form-label">First Name</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="first_name"
+                                            name="first_name"
+                                            value="<%= user.first_name %>"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="last_name" class="form-label">Last Name</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="last_name"
+                                            name="last_name"
+                                            value="<%= user.last_name %>"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phonenumber" class="form-label">Phone Number</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="phonenumber"
+                                            name="phonenumber"
+                                            value="<%= user.phonenumber %>"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="email"
+                                            name="email"
+                                            value="<%= user.email %>"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address" class="form-label">Address</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="address"
+                                            name="address"
+                                            value="<%= user.address %>"
+                                            required
+                                        />
+                                    </div>
+                                    <div class="mb-3 <%- user.role != 'admin' ? 'd-none' : 'd-block' %>">
+                                        <label for="role" class="form-label">Role</label>
+                                        <select class="form-select" id="role" name="role" required>
+                                            <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+                                            <option value="staff" <%= user.role === 'staff' ? 'selected' : '' %>>Staff</option>
+                                            <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="/main.js" type="module"> </script> -->
+    <script src="/customer.js" type="module"></script>
+</body>
+
+</html>

@@ -57,6 +57,8 @@ async function PostFileApi(api, postData, fufillfunc, rejectfunc) {
 
 
 
+
+
 function clearinputs (...input) {
     input.forEach((inp)=>{
         inp.value = ""

@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Customers = sequelize.define("Customer", {
         customer_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+        admin_id: {type:DataTypes.INTEGER,allowNull:false},
         first_name: {
             type: DataTypes.STRING, allowNull: false, validate: {
                 notEmpty: { msg: "firstname is required" },

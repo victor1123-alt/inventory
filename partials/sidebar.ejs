@@ -1,5 +1,5 @@
 <div
-class="col-sm-auto responsive-width bg-white pt-sm-5 pt-2 px-sm-4 px-sm-3 sticky-top min-vh-100 position-sm-relative position-nr-fixed ">
+class="col-sm-auto responsive-width bg-white pt-sm-5 pt-2 px-sm-2 px-sm-2 sticky-top min-vh-100 position-sm-relative position-nr-fixed ">
 <ul class="nav nav-pills flex-column justify-content-center ">
     <li class="nav-item pt-5 mb-3">
         <a href="/api/customers" class="nav-link d-flex justify-content-between align-items-center flex-column">
@@ -28,8 +28,25 @@ class="col-sm-auto responsive-width bg-white pt-sm-5 pt-2 px-sm-4 px-sm-3 sticky
             </div>
         </a>
     </li>
+    <li class="nav-item mb-3 dropdown pointer dropend">
+        <a href="#" class="nav-link d-flex justify-content-between align-items-center flex-column dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="/img/admin.png" alt="" width="40px">
+            <div>
+                admin action
+            </div>
+            
+        </a>
+        <ul class="dropdown-menu">
+            <li><a href="/api/customers/addadmin" class="dropdown-item ">add admin</a></li>
+            <!-- <li><a href="" class="dropdown-item">admin action restriction</a></li> -->
+            <li><a href="/api/customers/adminactivity" class="dropdown-item">admin history</a></li>
+            <li><a href="/api/customers/viewadmin" class="dropdown-item">view all admin</a></li>
+            <li><a href="/api/customers/myprofile" class="dropdown-item">admin details</a></li>
+
+        </ul>
+    </li>
     <li class="nav-item mb-3">
-        <a href="" class="nav-link d-flex justify-content-between align-items-center flex-column">
+        <a href="/api/customers/logout" class="nav-link d-flex justify-content-between align-items-center flex-column">
             <img src="/img/Logout.png" alt="">
             <div>
 

@@ -5,8 +5,9 @@ Content-Type: application/json
     "phonenumber":"07072074319",
     "first_name":"victor",
     "last_name":"mark",
-    "email":"mkvictor579@gmail.com",
-    "password":"mkyde1123",
+    "email":"jobmrk@gmail.com",
+    "password":"victor579",
     "address":"iyiowa odepke",
-    "role":"admin"
+    "role":"admin",
+    "gender":"male"
 }

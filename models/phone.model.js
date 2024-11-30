@@ -2,6 +2,8 @@ const { phoneBrand } = require("./phone.brand")
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define("phoneModel",{
+    admin_id: {type:DataTypes.INTEGER,allowNull:false},
+
     name: {
       type: DataTypes.STRING,
       allowNull: false,
