@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull:false,
             defaultValue:"user",
         },
+        gender:{
+            type: DataTypes.ENUM('male','femail'),
+            allowNull:false,
+        },
         created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
     }, { timestamps: false });
 

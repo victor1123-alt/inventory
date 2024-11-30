@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Send DELETE request with password
-            const response = await fetch(`/delete/${selectedPhoneId}`, {
+            const response = await fetch(`/api/customers/deleteinvent/${selectedPhoneId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

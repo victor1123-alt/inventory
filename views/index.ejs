@@ -117,7 +117,7 @@
                                                                 sale.Customer.last_name %> </a></td>
                                                 <td class="py-4 px-2 text-center">
                                                     <% let myphonees=phones.find(id=> id.phone_id ==
-                                                        sale.allitems[0].brand) %> <%- myphonees.brand %> <%-
+                                                        sale.allitems[0].brand) %> <%- myphonees?.brand %> <%-
                                                                 sale.allitems[0].model %> <%- sale.allitems[0].part %>
                                                                     ...
                                                 </td>

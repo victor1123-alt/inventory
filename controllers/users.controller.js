@@ -24,7 +24,7 @@ function signJwt (id){
   
 
 exports.Singup = async (req,res)=>{
-    const { email, password,first_name,last_name,phonenumber,address,role} = req.body;
+    const { email, password,first_name,last_name,phonenumber,address,role,gender} = req.body;
   
     try {
       // Check if the user already exists
@@ -42,7 +42,8 @@ exports.Singup = async (req,res)=>{
         last_name,
         phonenumber,
         address,
-        role
+        role,
+        gender
       });
   
 
@@ -102,3 +103,5 @@ exports.login = async (req,res)=>{
       error.erros?res.status(500).json({error:handleValidationErr(error.errors),type:"validation"}):res.status(500).json({ error: 'An error occurred while logging in',type:"invalid" });
     }
 }
+
+

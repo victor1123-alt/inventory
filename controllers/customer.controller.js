@@ -2,9 +2,9 @@ const db = require("../models");
 const Customer = db.Customer;
 const Sale = db.Sale;
 const Phone = db.phoneBrand;
+const ExcelJS = require('exceljs');
 const bcrypt = require('bcrypt');
 
-const ExcelJS = require('exceljs');
 
 const handleValidationErr = (error)=>{
     const allErr = []
@@ -149,7 +149,7 @@ exports.getmyadminactivity = async (req,res) =>{
 exports.addAdmin = async (req,res) =>{
     try {
         // const adminactivity = await db.AdminActivity.findAll({include:[{model:db.Users}]}); // Or any other query to get sales
-
+        
         res.status(200).render('addadmin',{admin:req.user})
     } catch (error) {
         console.log(error);
@@ -170,7 +170,7 @@ exports.addAdmin = async (req,res) =>{
 
 exports.viewAllAdmins = async (req,res) =>{
     try {
-        const admins = await db.Users.findAll({where:{role:{[Op.or]:["staff","admin"]}}}); // Or any other query to get sales
+        const admins = await db.Users.findAll({where:{role:{[Op.or]:["staff","admin"]},user_id:{[Op.ne]:req.user.user_id}}}); // Or any other query to get sales
 
         res.status(200).render('viewadmin',{admins})
     } catch (error) {
@@ -334,6 +334,7 @@ const path = require('path');
 const phoneModel = require("../models/phone.model");
 const saleModel = require("../models/sale.model");
 const { Op } = require("sequelize");
+const customerModel = require("../models/customer.model");
 
 // Create a new phone brand with an uploaded image
 exports.createPhoneBrand = async (req, res) => {
@@ -373,32 +374,182 @@ exports.createPhoneModel = async (req,res)=>{
 }
 
 exports.deletePhone = async (req, res) => {
-    const phoneId = req.params.id; // Get the ID from the route parameter
-    const { password } = req.body; // Get the password from the request body
-    const user = req.user;
-    try {
-        
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+  const phoneId = req.params.id; // Get the ID from the route parameter
+  const { password } = req.body; // Get the password from the request body
+  const user = req.user  
+  try {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-      // Check if password is correct
-      if (!isPasswordValid) {
-        return res.status(401).json({ success: false, message: 'Invalid password.' });
-      }
-  
-      // Delete the phone from the database
-      const result = await Phone.destroy({
-        where: { phone_id: phoneId }, // Match the ID column
-      });
-  
-      if (result) {
-        res.status(200).json({ success: true, message: 'Phone deleted successfully.' });
-      } else {
-        res.status(404).json({ success: false, message: 'Phone not found.' });
-      }
-    } catch (error) {
-      console.error('Error deleting phone:', error);
-      res.status(500).json({ success: false, message: 'Internal Server Error.' });
+    // Check if password is correct
+    if (!isPasswordValid) {
+      return res.status(401).json({ success: false, message: 'Invalid password.' });
     }
-  };
-  
+
+    // Delete the phone from the database
+    const result = await Phone.destroy({
+      where: { phone_id: phoneId }, // Match the ID column
+    });
+
+    if (result) {
+      res.status(200).json({ success: true, message: 'Phone deleted successfully.' });
+    } else {
+      res.status(404).json({ success: false, message: 'Phone not found.' });
+    }
+  } catch (error) {
+    console.error('Error deleting phone:', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error.' });
+  }
+};
+
+exports.toggleStockStatus = async (req, res) => {
+    const { id } = req.params;
+    const { newStockStatus, password } = req.body;
+    const user = req.user
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    // Replace this with your admin password validation logic
+    const adminPassword = "secure_password"; // Example password
+    if (!isPasswordValid) {
+        return res.status(401).json({ success: false, message: "Invalid password." });
+    }
+
+    try {
+        const phone = await db.PhoneModel.findOne({where:{id}});
+        if (!phone) {
+            return res.status(404).json({ success: false, message: "Phone model not found." });
+        }
+
+        phone.stockstatus = newStockStatus;
+        await phone.save();
+
+        res.status(200).json({
+            success: true,
+            message: `Stock status updated to ${newStockStatus === 1 ? "In Stock" : "Out of Stock"}.`,
+        });
+    } catch (error) {
+        console.error("Error updating stock status:", error);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    }
+};
+
+
+exports.deletePhoneModel = async (req, res) => {
+    const { id } = req.params;
+    const { password } = req.body;
+    const user = req.user
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!password) {
+        return res.status(400).json({ success: false, message: "Password is required." });
+    }
+
+    try {
+        // Replace with actual password verification logic
+        if (!isPasswordValid) {
+            return res.status(403).json({ success: false, message: "Invalid password." });
+        }
+
+        const phone = await db.PhoneModel.findOne({where:{id}});
+
+        if (!phone) {
+            return res.status(404).json({ success: false, message: "Phone model not found." });
+        }
+
+        await phone.destroy();
+
+        res.status(200).json({ success: true, message: "Phone model deleted successfully." });
+    } catch (error) {
+        console.error("Error deleting phone model:", error);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    }
+};
+
+
+
+exports.updateCustomer = async (req, res) => {
+    const { id } = req.params;
+    const { first_name, last_name, email, phone_number, address } = req.body;
+
+    try {
+        const customer = await Customer.findOne({where:{customer_id:id}});
+        if (!customer) {
+            return res.status(404).json({ message: "Customer not found" });
+        }
+
+        await customer.update({ first_name, last_name, email, phone_number, address });
+        res.status(200).json({ message: "Customer updated successfully" });
+    } catch (err) {
+        console.error("Error updating customer:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+exports.deleteCustomer = async (req, res) => {
+    const { id } = req.params;
+    const { password } = req.body;
+
+    const user = req.user
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+
+        return res.status(403).json({ message: "Invalid password. Deletion not allowed." });
+    }
+
+    try {
+        const customer = await Customer.findOne({where:{customer_id:id}});
+        if (!customer) {
+            return res.status(404).json({ message: "Customer not found" });
+        }
+
+        await customer.destroy();
+        res.status(200).json({ message: "Customer deleted successfully" });
+    } catch (err) {
+        console.error("Error deleting customer:", err);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+exports.logout =  (req, res) => {
+    // Clear the JWT token stored in the cookie
+    res.clearCookie('token', {
+        httpOnly: true, 
+        secure: true, // Set this to `true` if using HTTPS
+        sameSite: 'strict', // Helps prevent CSRF
+    });
+
+    res.redirect('/api/users/login')
+}
+
+exports.deleteAdmin =async (req,res) =>{
+    const { id } = req.params;
+    const { password } = req.body;
+    const user = req.user
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!password) {
+        return res.status(400).json({ success: false, message: "Password is required." });
+    }
+
+    try {
+        // Replace with actual password verification logic
+        if (!isPasswordValid) {
+            return res.status(403).json({ success: false, message: "Invalid password." });
+        }
+
+        const admin = await db.Users.findOne({where:{user_id:id}});
+
+        if (!admin) {
+            return res.status(404).json({ success: false, message: "Admin not found" });
+        }
+
+        await admin.destroy();
+
+        res.status(200).json({ success: true, message: "deleted successfully." });
+    } catch (error) {
+        console.error("Error deleting user model:", error);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    }
+}
+
 // Other controllers (e.g., createPhoneModel, createPhone) remain unchanged

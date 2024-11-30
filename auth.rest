@@ -8,5 +8,6 @@ Content-Type: application/json
     "email":"jobmrk@gmail.com",
     "password":"victor579",
     "address":"iyiowa odepke",
-    "role":"admin"
+    "role":"admin",
+    "gender":"male"
 }

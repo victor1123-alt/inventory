@@ -75,3 +75,40 @@ async function fetchSalesData() {
         console.error('Error fetching sales data:', error);
     }
 }
+
+
+
+
+
+document.getElementById("editCustomerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("editCustomerId").value;
+    const updatedCustomer = {
+        first_name: document.getElementById("editFirstName").value,
+        last_name: document.getElementById("editLastName").value,
+        email: document.getElementById("editEmail").value,
+        phone_number: document.getElementById("editPhone").value,
+        address: document.getElementById("editAddress").value,
+    };
+
+    try {
+        const response = await fetch(`/api/customers/edit/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedCustomer),
+        });
+
+        if (response.ok) {
+            alert("Customer updated successfully!");
+            location.reload(); // Refresh the page to show updated data
+        } else {
+            const error = await response.json();
+            alert(`Error: ${error.message}`);
+        }
+    } catch (err) {
+        console.error("Failed to update customer:", err);
+    }
+});
+
+

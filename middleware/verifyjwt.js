@@ -28,8 +28,10 @@ const verifyCookies = (req, res, next) => {
       const user = await Users.findOne({where:{user_id:decoded.id}})
       // console.log(user);
       
+      if(!user) {res.redirect('/api/customers/logout')}else {
       req.user = user; // Attach decoded token data to req object
-      next(); // Proceed to the next middleware
+      next(); 
+      }// Proceed to the next middleware
   });
 };
 

@@ -12,12 +12,12 @@ addadmin.onsubmit = (e)=>{
     const email = addadmin.email;
     const address = addadmin.address;
     const password = addadmin.password;
-    const role = addadmin.role
-    PostApi('/api/users/signup',{email:email.value,password:password.value,first_name:first_name.value,last_name:last_name.value,address:address.value,phonenumber:phonenumber.value,role:role.value},(x)=>{if (x.message == "success") {
-        addadmin.querySelector(".btn").innerHTML = "Login"
-
-         document.location = x.redirect
-    }})
+    // const role = addadmin.role
+    const gender = addadmin.gender
+    PostApi('/api/users/signup',{email:email.value,password:password.value,first_name:first_name.value,last_name:last_name.value,address:address.value,phonenumber:phonenumber.value,role:"staff",gender:gender.value},(x)=>{
+        addadmin.querySelector(".btn").innerHTML = "Add Admin"
+         document.location = "/api/customers/viewadmin"
+    })
     
 
 }
