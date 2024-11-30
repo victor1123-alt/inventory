@@ -23,7 +23,7 @@ app.use('/api/customers', verifyCookies,customerRoutes);
 app.use('/api/users',userRoutes);
 
 // Sync database and start server
-db.sequelize.sync().then(() => {
+db.sequelize.sync({force: true}).then(() => {
     app.listen(3000, () => {
         console.log('Server is running on port 3000');
     });
