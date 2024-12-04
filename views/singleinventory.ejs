@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <div class="bg-light w-100" style="min-width: 576px;">
+        <%- include('../partials/navbar.ejs') %>
+            <div class="row mt-5 ">
+                <%- include('../partials/sidebar.ejs') %>
+                    <div class="col min-vh-100 pt-4">
+                        <div class="bg-white mt-4 mb-4 px-4 mx-4 rounded-3 py-3">
+                            
+                            <div class="">
+
+                                <div class="fs-4 my-5 text-primary text-center fw-bold">
+                                    Purchase history
+                                </div>
+                               
+                            </div>
+                            <div class="" style="overflow-x: auto;">
+                               <div>
+                                    <div class="d-flex justify-content-between mx-3 my-4">
+                                        <div class="fw-bold">
+                                            Date: 
+                                        </div>
+                                        <div>
+                                            <%- new Date(orders.createdAt).toLocaleDateString() %>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mx-3 my-4">
+                                        <div class="fw-bold">
+                                            Order ID: 
+                                        </div>
+                                        <div>
+                                            ORD-<%- orders.sale_id %>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mx-3 my-4">
+                                        <div class="fw-bold">
+                                            Customer Name: 
+                                        </div>
+                                        <div>
+                                            <%- orders.Customer.first_name  %> <%- orders.Customer.last_name %>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mx-3 my-4">
+                                        <div class="fw-bold">
+                                            Customer contact: 
+                                        </div>
+                                        <div>
+                                            <%- orders.Customer.phone_number  %> 
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mx-3 my-4">
+                                        <div class="fw-bold">
+                                            Status: 
+                                        </div>
+                                        <div>
+                                            <a href="" class="btn btn-success"><%- orders.status  %></a>
+                                        </div>
+                                    </div>
+
+                                    <div class="mx-3">
+                                        <div class="text-primary fw-bold fs-5">
+                                            Itemized Details
+                                        </div>
+                                        <div>
+                                            <table class="table table-hover table-sm table_results w-100 ajax pma_table w-100 my-4">
+                                                <thead class="">
+                                                    <tr class="text-primary">
+                                                        <th class="px-2 draggable  position-sticky marker pointer pb-4 ">Brand</th>
+
+                                                        <th class="px-2 draggable  position-sticky marker pointer pb-4 text-center">Model</th>
+                                                        <th class="px-2 text-center pb-4">item</th>
+                                                        <th class="px-2 text-center pb-4">quantity</th>
+                                                        <th class="px-2 text-center pb-4">unit price</th>
+                                                        <th class="px-2 text-center pb-4">selling price</th>
+                                                        <th class="px-2 text-center pb-4">discount rate</th>
+
+                                                        <th class="px-2 text-center pb-4">total (#)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+            
+                                                    <% orders.allitems.forEach((sale,index)=>{%>
+                                                        <tr class="<%- index % 2 != 0 ? 'bg-default-blue':'' %> pointer">
+                                                            <td class="py-3 mt-3 px-2"><%- phones.find((phone)=>phone.phone_id == sale.brand ).brand %>  </td>
+                                                            <td class="py-3 mt-3 px-2 text-center" title="ORD-<%- sale.sale_id %>"> <%- sale.model %> </td>
+                                                            <td class="py-3 mt-3 px-2 text-center" title="<% sale.part %>"><%- sale.part %></td>
+                                                            <td class="py-3 mt-3 px-2 text-center" title="<% sale.qty %>"><%- sale.qty %></td>
+                                                            <td class="py-3 mt-3 px-2 text-center"><%- sale.selling_price %></td>
+                                                            <td class="py-3 mt-3 px-2 text-center"><%- sale.price %></td>
+                                                            <td class="py-3 mt-3 px-2 text-center"><%-( sale.selling_price - sale.price) * sale.selling_price /100 %> %</td>
+
+                                                            <td class="py-3 mt-3 px-2 text-center"><%- sale.price * sale.qty %></td>
+                                                        </tr>
+                                                        <%})%>
+            
+                                                </tbody>
+            
+                                            </table>
+                                            <div>
+                                                <div class="text-primary fs-5 fw-bold">
+                                                    Summary
+                                                </div>
+                                                <div>
+                                                    <div class="d-flex justify-content-between my-4">
+                                                        <div class="fw-bold">
+                                                            Subtotal:
+                                                        </div>
+                                                        <div>
+                                                            #<% let total = 0; orders.allitems.forEach((item)=>{ total = total + Number(item.selling_price * item.qty );  %> <span><%- total %></span> <% }) %>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between my-4">
+                                                        <div class="fw-bold">
+                                                            Discount:
+                                                        </div>
+                                                        <div>
+                                                            #<% let sub = 0; orders.allitems.forEach((item)=>{ sub = sub + Number(item.price * item.qty );  %> <span><%- total - sub %></span> <% }) %>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between my-4">
+                                                        <div class="fw-bold">
+                                                            GrandTotal:
+                                                        </div>
+                                                        <div>
+                                                             #<span><%- sub %></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between align-items-center my-4">
+                                                        <div>
+                                                            <a href="#" class="btn btn-light px-5">cancel</a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="/api/customers/download/<%-orders.sale_id%>" class="btn btn-primary px-5">Dowload</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                            </div>
+
+                          
+                        </div>
+                        <div class="modal w-100 " id="addInvent">
+                            <div class="modal-dialog modal-lg  modal-dialog-centered">
+                                <div class="bg-white  container-fluid  p-sm-4 modal-content"
+                                    style="border-radius: 20px;">
+                                    <div class=" text-center fw-bold fs-3 py-3">
+                                        Add Customer
+                                    </div>
+                                    <div class="">
+                                        <form action="" name="customer_form">
+                                            <div class="row align-items-baseline">
+                                                <div class="mb-4 col">
+                                                    <label for="name" class="form-label fw-bold"> customer's
+                                                        firstname</label>
+                                                    <input type="text" class="form-control" name="firstname"
+                                                        aria-labelledby="firstname-err">
+                                                    <div class="form-text text-danger err" id="firstname-err"
+                                                        data-err="first_name"></div>
+                                                </div>
+                                                <div class="mb-4 col">
+                                                    <label for="name" class="form-label fw-bold"> customer's
+                                                        lastname</label>
+                                                    <input type="text" class="form-control" name="lastname"
+                                                        aria-labelledby="lastname-err">
+                                                    <div class="form-text text-danger err" id="lastname-err"
+                                                        data-err="last_name"></div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-4">
+                                                <label for="name" class="form-label fw-bold"> customer's
+                                                    email</label>
+                                                <input type="email" class="form-control" name="email"
+                                                    aria-labelledby="email-err">
+                                                <div class="form-text text-danger err" id="email-err" data-err="email">
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-baseline">
+                                                <div class="mb-4 col">
+                                                    <label for="name" class="form-label fw-bold"> customer's
+                                                        phone</label>
+                                                    <input type="tel" class="form-control" name="phone"
+                                                        aria-labelledby="phone-err">
+                                                    <div class="form-text text-danger err" id="phone-err"
+                                                        data-err="phone_number"></div>
+                                                </div>
+                                                <div class="mb-4 col">
+                                                    <label for="name" class="form-label fw-bold"> customer's
+                                                        physical address</label>
+                                                    <input type="text" class="form-control" name="physicalAddress"
+                                                        aria-labelledby="address-err">
+                                                    <div class="form-text text-danger err" id="address-err"
+                                                        data-err="address"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center px-5">
+                                                <button class="btn btn-primary w-75 ">Add customer</button>
+                                            </div>
+                                        </form>
+                                        <div class="position-fixed bottom-0 end-0 p-3 " style="z-index: 11000">
+                                            <div id="liveToast" class="mytoast d-none modal-content " role="alert" aria-live="assertive"
+                                                aria-atomic="true" data-bs-autohide="false">
+                                                <div class="toast-header border-5 border-success">
+                                                    <img src="..." class="rounded me-2" alt="...">
+                                                    <strong class="me-auto">success !!!</strong>
+                                                </div>
+                                                <div class="toast-body">
+                                                    A user added successfully
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+    </div>
+
+    <%- include('../partials/footer.ejs') %>
+    <!-- <script src="/main.js" type="module"> </script> -->
+    <script src="/customer.js" type="module"></script>
+</body>
+
+</html>

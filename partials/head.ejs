@@ -1,0 +1,110 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    :root {
+        --default-blue1: #CFE8FF;
+    }
+
+    .custom-tooltip {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%; /* Adjusts how close the tooltip is to the trigger */
+  transform: translateY(-50%);
+  background-color: white;
+  box-shadow: 0px 0px 10px;
+  color: #000000;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-arrow {
+  position: absolute;
+  top: 50%;
+  left: -5px; /* Adjust arrow's position relative to tooltip */
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 5px 0; /* Adjust for triangle shape */
+  border-color: transparent white transparent transparent;
+}
+
+.tooltip-trigger:hover + .custom-tooltip {
+  display: block;
+}
+
+
+    body {
+        overflow-x: hidden !important;
+        max-width: 100%;
+        /* background-color: red; */
+    }
+
+    .bg-default-blue {
+        background-color: var(--default-blue1);
+    }
+
+    .text-default-blue {
+        color: var(--default-blue1);
+    }
+
+    .border-default-blue {
+        border-color: var(--default-blue1);
+    }
+
+    .border-none {
+        border: none !important;
+    }
+
+    .outline-none {
+        outline: none !important;
+    }
+
+    @media (min-width:576px) {
+        .position-sm-relative {
+            position: relative;
+        }
+
+        .responsive-width {
+            /* width: 100%; */
+        }
+    }
+
+    @media (max-width:576px) {
+        .position-nr-fixed {
+            position: fixed;
+            height: 100%;
+
+        }
+
+        .responsive-width {
+            width: 0%;
+            opacity: 0;
+        }
+    }
+
+    .td,
+    th,
+    tr,
+    tbody,
+    thead {
+        white-space: nowrap;
+
+    }
+
+    .table {
+        overflow-x: auto;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+</style>

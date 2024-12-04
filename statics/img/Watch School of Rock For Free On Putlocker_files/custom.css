@@ -1,0 +1,797 @@
+.error-block{display:none;color:red;}
+.jw-skin-seven .jw-overlay .jw-playlist-container{width:400px;left:-20%;}
+.jwplayer .jw-playlist{height:250px;}
+.jwplayer .jw-playlist .jw-option{padding:0 15px;margin:auto;text-align:left;}
+.jw-playlist .jw-name{width:30em !important;}
+#content-embed iframe{width:100% !important;height:100% !important;}
+.bp-btn-like.active i{color:#79C142;}
+.qtip{max-width:320px;}
+.qtip .qtip-content{font-size:12px;padding:12px;overflow:visible}
+.qtip .qtip-content .f-desc{line-height:1.3em !important;font-size:12px !important;}
+.qtip .qtip-title{margin-right:60px;background:#fff;color:#71B43E;font-size:16px;font-weight:600;padding:10px 12px;line-height:normal;}
+.qtip .qtip-titlebar{background:none !important;padding:0 !important;}
+.jtip-quality{top:-30px;right:12px;}
+#media-player{position:relative;height: 500px;}
+#content-embed {height: 500px;}
+.loading-film{position:absolute;top:0;right:0;bottom:0;left:50%;color:#fff;width:200px;text-align:center;height:180px;margin-left:-100px;top:50%;margin-top:-90px;}
+.content-kus{ overflow: hidden;}
+.content-kus div{ margin: 0 auto !important;}
+.jw-icon.jw-icon-tooltip.jw-icon-cc {color: #79C142;}
+.cssload-center{ position: relative; text-align: center; width: 100%; min-height: 70px; background: transparent;}
+.cssload-2x{ min-height: 100px;}
+.cssload-3x{ min-height: 160px;}
+.cssload{ width: 40px; height: 40px; position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: inline-block; margin: auto;}
+/*.cssload:before{ content: "Loading..."; width: 100px; text-align: center; font-size: 12px; color: #888; position: absolute; bottom: -25px; left: 50%; margin-left: -50px;}*/
+.cssload-2x .cssload{ width: 60px; height:60px;}
+.cssload-3x .cssload{ width: 120px; height:120px;}
+.cssload-3x .cssload span, .cssload-3x .cssload span:before,.cssload-3x .cssload span:after{ border-width: 3px !important;}
+.cssload *{ box-sizing: content-box;}
+.cssload span, .cssload span:before, .cssload span:after{
+    top: 0; left: 0;
+    position: absolute;
+    border-bottom: 2px solid transparent !important;
+    border: 2px solid #79C142;
+    border-radius: 50%;
+    -o-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    width: 100% !important; height: 100% !important;
+    display: inline-block;
+}
+.cssload span {
+    margin: -2px 0 0 -2px;
+    animation: cssload-rotate 1150ms linear infinite;
+    -o-animation: cssload-rotate 1150ms linear infinite;
+    -ms-animation: cssload-rotate 1150ms linear infinite;
+    -webkit-animation: cssload-rotate 1150ms linear infinite;
+    -moz-animation: cssload-rotate 1150ms linear infinite;
+}
+.cssload span:before {
+    content: "";
+    margin: 5% 0 0 5%;
+    height: 90% !important;
+    width: 90% !important;
+    animation: cssload-rotate 1150ms linear infinite;
+    -o-animation: cssload-rotate 1150ms linear infinite;
+    -ms-animation: cssload-rotate 1150ms linear infinite;
+    -webkit-animation: cssload-rotate 1150ms linear infinite;
+    -moz-animation: cssload-rotate 1150ms linear infinite;
+}
+.cssload span:after {
+    content: "";
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    height: 70% !important;
+    width: 70% !important;
+    animation: cssload-rotate 2300ms linear infinite;
+    -o-animation: cssload-rotate 2300ms linear infinite;
+    -ms-animation: cssload-rotate 2300ms linear infinite;
+    -webkit-animation: cssload-rotate 2300ms linear infinite;
+    -moz-animation: cssload-rotate 2300ms linear infinite;
+}
+.cssload-2x .cssload span::after, .cssload-3x .cssload span::after{
+    top: 13%;
+    left: 13%;
+    height: 74% !important;
+    width: 74% !important;
+}
+@keyframes cssload-rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes cssload-rotate {
+    100% {
+        -o-transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes cssload-rotate {
+    100% {
+        -ms-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes cssload-rotate {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes cssload-rotate {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+@media screen and (max-width: 991px){
+	#media-player {
+      height: 528px;
+    }
+    #content-embed {
+      height: 528px;
+    }
+}
+@media screen and (max-width: 799px){
+	#media-player {
+      height: 423px;
+    }
+    #content-embed {
+      height: 423px;
+    }
+}
+@media screen and (max-width: 640px){
+	#media-player {
+      height: 333px;
+    }
+    #content-embed {
+      height: 333px;
+    }
+}
+@media screen and (max-width: 520px){
+	#media-player {
+      height: 266px;
+    }
+    #content-embed {
+      height: 266px;
+    }
+}
+
+.detail_page-servers .dp-s-line .nav {
+    display: block;
+    text-align: center
+}
+
+.detail_page-servers .dp-s-line {
+    padding: 20px;
+    position: relative;
+	/* border-bottom: 1px solid #3f3f3f; */
+    /* margin: 1px 0; */
+    /* background: #222 */
+}
+
+.detail_page-servers .dp-s-line:last-of-type {
+    /* border-bottom: 1px solid #3f3f3f; */
+}
+
+.detail_page-servers .dp-s-line span.name {
+    position: absolute;
+    top: 30px;
+    left: 25px;
+    font-weight: 600;
+    color: #fff
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item {
+    margin: 5px;
+    display: inline-block
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link {
+    border-radius: 2px;
+    background: rgba(255,255,255,.1)!important;
+    font-size: 14px;
+    color: #ccc;
+    border: none!important;
+    text-align: center
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link:hover {
+    background: rgba(255,255,255,.2)!important;
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link.active {
+    background: #79C142!important;
+    color: #fff
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item {
+    width: auto!important;
+    float: none!important
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link {
+    width: auto!important;
+    text-align: left!important;
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 5px!important;
+    /* padding-top: 30px; */
+    padding-left: 50px
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link span {
+    font-weight: 600
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link span:before {
+    /* content: "Server"; */
+    position: absolute;
+    top: 10px;
+    font-weight: 400;
+    font-size: 13px;
+    opacity: .6
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link i {
+	opacity: .3;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px
+}
+
+.detail_page-servers .dp-s-line .nav .nav-item .nav-link.active i {
+	opacity: 1;
+}
+
+.seasons-list {
+    margin-top: 15px;
+    font-size: 1.1em;
+    line-height: 1.2em;
+    background: #222
+}
+
+.seasons-list .sl-content {
+    padding: 20px;
+	border-top: 1px solid #3f3f3f;
+}
+
+.seasons-list .sl-content .slc-seasons {
+    float: left;
+    width: 18%
+}
+
+.seasons-list .sl-content .slc-ul li {
+    display: block;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    padding: 2px 0
+}
+
+.seasons-list .sl-content .slc-ul li a {
+    padding: 10px 0;
+    display: block
+}
+
+.seasons-list .sl-content .slc-ul li.active a {
+    color: #79C142
+}
+
+.seasons-list .sl-content .slc-seasons .slcs-ul li {
+    display: block;
+    margin: 0 0 5px
+}
+
+.seasons-list .sl-content .slc-seasons .slcs-ul li a {
+    font-weight: 600;
+    padding: 12px 20px;
+    height: 43px;
+    display: block;
+    background: rgba(255,255,255,.1)!important;
+    border-radius: 3px
+}
+
+.seasons-list .sl-content .slc-seasons .slcs-ul li.active {
+    border-bottom-color: rgba(255,255,255,0)
+}
+
+.seasons-list .sl-content .slc-seasons .slcs-ul li.active a {
+    background: #79C142;
+    color: #fff
+}
+
+.seasons-list .sl-content .slc-seasons .slcs-ul li.active .badge {
+    background: #000!important;
+    color: #fff!important
+}
+
+.seasons-list .sl-content .sl-title {
+    font-size: 1.4em;
+    line-height: 1em;
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 20px
+}
+
+.seasons-list .sl-content .sl-title i {
+    font-size: 14px;
+    position: relative;
+    top: -2px
+}
+
+.seasons-list .sl-content .slc-eps {
+    float: left;
+    width: 82%;
+    padding-left: 15px
+}
+
+.seasons-list .sl-content .slc-eps .sl-title {
+    float: left;
+    margin-right: 20px
+}
+
+.seasons-list .sl-content .slc-eps .slce-server {
+    display: inline-block
+}
+
+.seasons-list .sl-content .slc-eps .slce-server ul {
+    border: 1px solid #fff;
+    border-radius: 3px;
+    position: relative;
+    top: -5px;
+    margin-bottom: 0!important
+}
+
+.seasons-list .sl-content .slc-eps .slce-server ul li a {
+    padding: 8px 10px!important;
+    color: #ccc;
+    font-size: 12px;
+    line-height: 1em;
+    border-radius: 0!important
+}
+
+.seasons-list .sl-content .slc-eps .slce-server ul li a.active {
+    background: #fff!important;
+    color: #fff!important
+}
+
+.seasons-list .sl-content .slc-eps .slce-server ul li a:hover {
+    border: none!important;
+    margin: 0;
+    color: #fff
+}
+
+.seasons-list .sl-content .slc-eps .slce-list ul {
+    margin-left: -.5%;
+    margin-right: -.5%
+}
+
+.seasons-list .sl-content .slc-eps .slce-list li {
+    margin: 0 .5% 5px;
+    width: 24%;
+    float: left
+}
+
+.seasons-list .sl-content .slc-eps .slce-list .nav-link {
+    border-radius: 3px;
+    /* height: 43px; */
+    background: rgba(255,255,255,.05)!important;
+    text-align: left;
+    padding: 12px 20px;
+    color: #fff;
+    border: none!important;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600
+}
+
+.seasons-list .sl-content .slc-eps .slce-list .nav-link strong {
+    font-weight: 600
+}
+
+.seasons-list .sl-content .slc-eps .slce-list .nav-link i {
+    opacity: .3;
+    font-size: 10px;
+    margin-right: 15px!important;
+    position: relative;
+    top: -1px
+}
+
+.seasons-list .sl-content .slc-eps .slce-list .nav-link:hover {
+    background: rgba(255,255,255,.2)!important;
+    color: #fff
+}
+
+.seasons-list .sl-content .slc-eps .slce-list .nav-link.active {
+    background: #79C142!important;
+    color: #fff
+}
+
+.seasons-list .sl-content .slc-eps .slce-list .nav-link.active i {
+    opacity: 1
+}
+
+.watch_page-tv .seasons-list {
+    margin-top: 2px!important;
+    margin-bottom: -5px
+}
+
+.seasons-list-nobg {
+    background: 0 0!important
+}
+
+.seasons-list-nobg .sl-content {
+    padding: 0!important
+}
+
+.seasons-list-new .sl-content {
+    padding: 20px
+}
+
+.seasons-list-new .sl-content .slc-eps {
+    width: 100%!important;
+    float: none!important;
+    padding: 0!important
+}
+
+.seasons-list-new .sl-content .slc-eps .slce-list li {
+    width: 19%;
+    margin-bottom: 10px
+}
+
+.seasons-list-new .sl-content .sl-title i {
+    top: auto
+}
+
+.slt-seasons-dropdown {
+    position: relative
+}
+
+.btn-seasons {
+    background: 0 0;
+    color: #fff!important;
+    color: inherit;
+    padding: 5px 0!important;
+    line-height: 1.1em;
+    box-shadow: none!important;
+	outline: none!important;
+	font-weight: 600;
+}
+
+.dropdown-menu-new {
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden
+}
+
+.dropdown-menu-new .dropdown-item {
+	display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    padding: 12px 20px;
+    font-size: 14px;
+    line-height: 1em;
+    color: #111
+}
+
+.dropdown-menu-new .dropdown-item:hover {
+    background: #eee
+}
+
+.dropdown-menu-new .dropdown-item.active {
+    background: #79C142;
+    color: #fff
+}
+
+.dropdown-menu-new {
+    max-height: 200px;
+    overflow: auto
+}
+
+.server-notice {
+    padding: 10px 0 15px;
+    /* font-size: 1.1em; */
+	font-weight: bold;
+    font-size: 14px;
+    line-height: 1.3em;
+    opacity: .8
+}
+
+@media screen and (max-width: 1299px) {
+    .seasons-list-new .sl-content .slc-eps .slce-list li {
+        width:24%
+    }
+
+    .seasons-list-new .sl-content {
+        /* background: rgba(0,0,0,.2) */
+    }
+}
+
+@media screen and (max-width: 1199px) {
+	.seasons-list .sl-content .slc-seasons {
+        width: 23%
+    }
+
+    .seasons-list .sl-content .slc-eps {
+        width: 77%;
+        padding-left: 20px
+    }
+
+    .seasons-list .sl-content {
+        padding: 20px
+    }
+
+    .seasons-list .sl-content .slc-eps .slce-list li {
+        width: 32.33%
+    }
+	
+	.detail_page-servers .dp-s-line,.detail_page-watch .detail_page-infor {
+        /* background: #111 */
+    }
+}
+
+@media screen and (max-width: 998px) {
+	.seasons-list .sl-content .slc-eps .slce-list li {
+        width: 49%
+    }
+}
+
+@media screen and (max-width: 759px) {
+	.seasons-list .sl-content .slc-seasons {
+        float: none;
+        width: 100%;
+        margin-bottom: 15px;
+        overflow: hidden
+    }
+
+    .seasons-list .sl-content .slc-seasons .slcs-ul {
+        margin-left: -1%;
+        margin-right: -1%
+    }
+
+    .seasons-list .sl-content .slc-seasons .slcs-ul li {
+        float: left;
+        width: 18%;
+        margin: 0 1% 5px
+    }
+
+    .seasons-list .sl-content .slc-seasons .slcs-ul li .badge {
+        display: none
+    }
+
+    .seasons-list .sl-content .slc-seasons .slcs-ul li a {
+        padding: 10px 12px;
+        height: auto
+    }
+
+    .seasons-list .sl-content .slc-eps {
+        width: 100%;
+        float: none;
+        padding-left: 0;
+        position: relative
+    }
+	
+	.detail_page-servers .dp-s-line span.name {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 5px;
+        display: inline-block;
+        width: 100%
+    }
+
+    .detail_page-servers .dp-s-line {
+        padding: 20px
+    }
+	
+	.detail_page-servers .dp-s-line ul.nav {
+        margin-left: -1%;
+        margin-right: -1%
+    }
+
+    .detail_page-servers .dp-s-line ul.nav .nav-item {
+        margin: 5px 1%
+    }
+
+    .detail_page-servers .dp-s-line ul.nav .nav-item .nav-link {
+        width: 100%
+    }
+}
+
+@media screen and (max-width: 639px) {
+	.seasons-list {
+        font-size: 14px;
+        line-height: 1.2em;
+        /* margin-top: 15px!important; */
+        /* margin-bottom: 15px!important */
+    }
+	
+	.watch_page-tv .seasons-list {
+        background: #111;
+        margin: 0 -15px 20px!important
+    }
+	
+	.detail_page-servers {
+        /* margin: 0 -15px */
+    }
+}
+
+@media screen and (max-width: 480px) {
+	.seasons-list .sl-content .slc-seasons .slcs-ul li {
+        width: 31.33%
+    }
+
+    .seasons-list .sl-content .slc-eps .slce-list li {
+        width: 98%
+    }
+
+    .seasons-list .sl-content .slc-seasons {
+        margin-bottom: 20px
+    }
+
+    .seasons-list .sl-content .slc-seasons .slcs-ul li a {
+        border: 1px solid transparent
+    }
+
+    .seasons-list .sl-content .sl-title {
+        margin-bottom: 15px
+    }
+
+    .seasons-list .sl-content .slc-eps .slce-list .nav-link {
+        height: auto;
+        padding: 10px 15px
+    }
+	
+	.detail_page-servers .dp-s-line .nav .nav-item {
+        width:100%!important;
+        margin: 3px 0!important
+    }
+
+    .detail_page-servers .dp-s-line .nav .nav-item .nav-link {
+        padding: 12px 20px 12px 50px!important
+    }
+
+    .detail_page-servers .dp-s-line .nav .nav-item .nav-link i {
+        font-size: 12px
+    }
+
+    .detail_page-servers .dp-s-line .nav .nav-item .nav-link span:before {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-right: 6px;
+        font-size: 1em
+    }
+	
+	.detail_page-servers .dp-s-line ul.nav {
+        max-height: 400px;
+        overflow: auto
+    }
+	
+	.server-notice {
+        text-align: left!important;
+        font-size: 1em;
+        padding-top: 0
+    }
+}
+
+@media screen and (max-width: 479px) {
+	.seasons-list .sl-content .slc-eps .slce-server {
+        display: block;
+        margin-bottom: 15px
+    }
+
+    .seasons-list .sl-content .slc-eps .slce-server ul {
+        top: auto;
+        float: none
+    }
+
+    .seasons-list .sl-content .slc-eps .sl-title {
+        float: none;
+        font-size: 1.3em;
+        line-height: 1.1em
+    }
+
+    .seasons-list .sl-content .slc-eps .slce-list ul {
+        max-height: 400px;
+        overflow: auto
+    }
+	
+	.watch_page-tv .seasons-list {
+        padding: 20px
+    }
+	
+	.seasons-list .sl-content {
+        /* padding: 0 */
+    }
+	
+	.detail_page-servers .dp-s-line ul.nav .nav-item {
+        width: 98%;
+        margin: 5px 1%
+    }
+
+    .detail_page-servers .dp-s-line ul.nav .nav-item a {
+        width: 100%;
+        max-width: none!important
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .detail_page-servers .dp-s-line ul.nav .nav-item {
+        margin-bottom:5px
+    }
+}
+
+.seasons-list .sl-content .slc-eps .slce-server ul li a {
+    white-space: nowrap
+}
+
+.seasons-list .sl-content .slc-seasons .slcs-ul li a {
+    position: relative;
+    padding-right: 60px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.seasons-list .sl-content .slc-seasons .slcs-ul li a .float-right {
+    position: absolute;
+    right: 20px;
+    top: 12px
+}
+
+@media screen and (max-width: 759px) {
+    .seasons-list .sl-content .slc-seasons .slcs-ul li {
+        width:auto!important;
+        margin-bottom: 10px!important
+    }
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+.light .seasons-list {
+	background: #fff;
+}
+
+.light .seasons-list .sl-content {
+	border-top: 1px solid #eee;
+}
+
+.light .detail_page-servers .dp-s-line .nav .nav-item .nav-link {
+	background: rgba(0,0,0,.1)!important;
+	color: #333;
+}
+
+.light .detail_page-servers .dp-s-line .nav .nav-item .nav-link:hover {
+    background: rgba(0,0,0,.2)!important;
+}
+
+.light .detail_page-servers .dp-s-line .nav .nav-item .nav-link.active {
+    background: #79C142!important;
+	color: #fff
+}
+
+.light .seasons-list .sl-content .slc-seasons .slcs-ul li a {
+	background: rgba(0,0,0,.1)!important;
+}
+
+.light .seasons-list .sl-content .slc-eps .slce-list .nav-link {
+	background: rgba(0,0,0,.1)!important;
+	color: #333;
+}
+
+.light .seasons-list .sl-content .slc-eps .slce-list .nav-link:hover {
+	background: rgba(0,0,0,.2)!important;
+	color: #333
+}
+
+.light .seasons-list .sl-content .slc-eps .slce-list .nav-link.active {
+    background: #79C142!important;
+    color: #fff
+}
+
+.light .btn-seasons {
+	color: #333!important;
+}
