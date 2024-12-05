@@ -34,34 +34,29 @@ addPhoneBrand.onsubmit = (e) => {
 
     const brand = addPhoneBrand.brand.value;
     const description = addPhoneBrand.description.value;
-    const imageUrl = addPhoneBrand.imageUrl.files[0];
+    const os = addPhoneBrand.os.value;
 
     addPhoneBrand.querySelector('.btn').innerHTML = "...loading"
-    console.log(imageUrl);
 
-    const formData = new FormData();
-    formData.append('name', brand);
-    formData.append('description', description); // Optional
-    formData.append('image', imageUrl);
-    console.log(formData);
 
-    PostFileApi('/api/customers/phone-brands', formData,
+    PostApi('/api/customers/phone-brands', {brand,description,os},
         (x) => {
             addPhoneBrand.querySelector('.btn').innerHTML = "Add Phone Brand"
 
             document.querySelector('.mytoast').classList.remove('d-none');
             fetchPhoneBrands()
-            clearinputs(addPhoneBrand.brand,addPhoneBrand.description,addPhoneBrand.imageUrl)
+            clearinputs(addPhoneBrand.brand, addPhoneBrand.description, addPhoneBrand.os)
             setTimeout(() => {
-                
+
                 document.querySelector('.mytoast').classList.add('d-none');
-                
+
             }, 4000);
         }, (x) => {
             addPhoneBrand.querySelector('.btn').innerHTML = "Add Phone Brand"
 
             x.forEach((err) => {
 
+                
                 if (err.type == "Validation error") {
                     // console.log(err);
 
@@ -76,7 +71,7 @@ addPhoneBrand.onsubmit = (e) => {
         })
 }
 
-document.querySelector('#refreshButton').onclick = ()=>{
+document.querySelector('#refreshButton').onclick = () => {
     fetchPhoneBrands()
 }
 
@@ -98,16 +93,23 @@ async function fetchPhoneBrands() {
             const div = document.createElement('div');
 
             div.classList.add('col-3', 'mx-1', 'bg-transperent')
+            let distinctNames = [...new Map(phone.phoneModels.map(item => [item.name, item])).values()];
+                                           
             div.innerHTML = `
-               <a href="/api/customers/models/${phone.phone_id}">
-                                    <div class="card h-100 pointer" style="overflow: hidden;">
-                                        <img src="/img/category/${phone.imageUrl}"
-                                            class="card-img-top" alt="${phone.brand}">
-                                        <div class="card-img-overlay pointer d-flex ">
-                                            <div class="brand-name">${phone.brand}</div>
+              <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                          <h5 class="card-title text-capitalize pb-2">${phone.brand}</h5>
+                                          <h6 class="card-subtitle mb-2 text-muted">${phone.os}</h6>
+                                          <div class="card-text py-1"><span class="text-muted fw-bold">description: </span>${phone.description}</div>
+                                          <div class="card-text py-1"><span class="text-muted fw-bold">Amount of model : </span> ${distinctNames.length }</div>
+                                          <div class="card-text py-1 pb-3"><span class="text-muted fw-bold">Amount of parts : </span>${ phone.phoneModels.length }</div>
+
+                                          <div class="d-flex justify-content-between">
+                                            <button class="btn btn-danger w-50 mx-3 delete-btn" data-id="${phone.phone_id }">Delete</button>
+                                            <div class="w-50 mx-3 btn btn-secondary">view</div>
                                         </div>
-                                    </div>
-                                   </a>
+                                        </div>
+                                      </div>
           `;
             myphonecontainer.appendChild(div);
         });

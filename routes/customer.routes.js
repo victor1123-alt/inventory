@@ -8,7 +8,7 @@ router.get('/orders/:customerId', customerController.getCustomerOrders);
 router.get('/myorders/:inventoryId', customerController.getCustomerInventory);
 router.get('/download/:customerId', customerController.downloadOrders);
 router.get('/phones',customerController.getPhones);
-router.post('/phone-brands', upload.single('image'),customerController.createPhoneBrand);
+router.post('/phone-brands', customerController.createPhoneBrand);
 router.get('/models/:id',customerController.getPhonesModels);
 router.post('/createmodel',customerController.createPhoneModel);
 router.post('/createsale',customerController.PostCustomerOrders);

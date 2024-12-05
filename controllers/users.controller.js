@@ -93,7 +93,7 @@ exports.login = async (req,res)=>{
       const token = signJwt(user.user_id)
       
       //console.log(profileIsSetUp);
-      const myCookie = res.cookie('token', token, { httpOnly: true, secure: true, maxAge:360000 }); 
+      const myCookie = res.cookie('token', token, { httpOnly: true, secure: true,sameSite: false}); 
 
       // console.log(myCookie);
       
@@ -105,3 +105,6 @@ exports.login = async (req,res)=>{
 }
 
 
+exports.requestaccount = (req,res) =>{
+  res.render('requestaccount')
+}

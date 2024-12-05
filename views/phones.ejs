@@ -4,14 +4,7 @@
 <head>
     <%- include('../partials/head.ejs') %>
         <style>
-            .card {
-                background-color: transparent !important;
-                box-shadow: none !important;
-                min-height: 350px;
-                max-height: 350px;
-                /* border: none !important; */
-            }
-
+          
             .card-img-overlay {
                 background-color: #cfe8ff8e;
                 opacity: 0;
@@ -49,7 +42,7 @@
 </head>
 
 <body>
-    <div class="bg-light w-100" style="min-width: 576px;">
+    <div class="bg-light w-100" style="min-width: 100%;">
         <%- include('../partials/navbar.ejs') %>
             <div class="row mt-5 ">
                 <%- include('../partials/sidebar.ejs') %>
@@ -66,26 +59,25 @@
 
                                 <!-- Apple Card -->
                                 <% phones.forEach(phone=>{ %>
-                                    <div class="col-3 mx-1 bg-transperent">
-                                        <div class="card h-100 pointer" style="overflow: hidden;">
-                                            <img src="/img/category/<%- phone.imageUrl %>" class="card-img-top"
-                                                alt="<%-phone.brand %>">
-                                            <div class="card-img-overlay pointer d-flex flex-column">
-                                                <div class="brand-name"> <a class="text-decoration-none"
-                                                        href="/api/customers/models/<%- phone.phone_id %>">
-                                                        <%-phone.brand %> </a>
-                                                </div>
-                                                <div class="d-flex justify-content-between">
-                                                    <button class="btn btn-danger w-50 mx-3 delete-btn" data-id="<%- phone.phone_id %>">Delete</button>
-                                                    <div class="w-50 mx-3 btn btn-success rounded-circle">+</div>
-                                                </div>
-                                            </div>
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                          <h5 class="card-title text-capitalize pb-2"><%- phone.brand %></h5>
+                                          <h6 class="card-subtitle mb-2 text-muted">iphone operating system</h6>
+                                          <div class="card-text py-1"><span class="text-muted fw-bold">description: </span><%- phone.description %></div>
+                                          <div class="card-text py-1"><span class="text-muted fw-bold">Amount of model : </span><% const distinctNames = [...new Map(phone.phoneModels.map(item => [item.name, item])).values()];
+                                            %> <%- distinctNames.length %></div>
+                                          <div class="card-text py-1 pb-3"><span class="text-muted fw-bold">Amount of parts : </span><%- phone.phoneModels.length %></div>
+
+                                          <div class="d-flex justify-content-between">
+                                            <button class="btn btn-danger w-50 mx-3 delete-btn" data-id="<%- phone.phone_id %>">Delete</button>
+                                            <div class="w-50 mx-3 btn btn-secondary">view</div>
                                         </div>
-                                    </div>
+                                        </div>
+                                      </div>
 
                                     <% }) %>
                             </div>
-                            <div class="d-flex">
+                            <div class="d-flex mt-5">
                                 <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addInvent">Add
                                     Inventory +</div>
                                 <div class="btn btn-primary ms-3" id="refreshButton">refresh</div>
@@ -119,9 +111,9 @@
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label for="name" class="form-label fw-bold"> image link </label>
-                                    <input type="file" class="form-control" name="imageUrl" aria-labelledby="imageUrl">
-                                    <div class="form-text text-danger err" id="imageUrl" data-err="imageUrl">
+                                    <label for="name" class="form-label fw-bold"> operating system </label>
+                                    <input type="text" class="form-control" name="os" aria-labelledby="os">
+                                    <div class="form-text text-danger err" id="os" data-err="os">
                                     </div>
                                 </div>
 
@@ -169,6 +161,8 @@
     </div>
     <script>
         const phones = <%- JSON.stringify(phones) %>
+        console.log(phones);
+        
     </script>
         <%- include('../partials/footer.ejs') %>
 

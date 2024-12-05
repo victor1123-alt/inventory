@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <div class="bg-light w-100" style="min-width: 576px;">
+    <div class="bg-light w-100" style="min-width: 100%;">
         <%- include('../partials/navbar.ejs') %>
             <div class="row mt-5 ">
                 <%- include('../partials/sidebar.ejs') %>
@@ -66,11 +66,11 @@
 
                         </div>
                         <div class="bg-white mt-5 px-4 mx-4 rounded-3 py-3">
-                            <div class="d-flex justify-content-between"> 
-                                <div class="fs-4 text-primary fw-bold">
+                            <div class="d-sm-flex justify-content-between"> 
+                                <div class="fs-4 text-primary text-center mb-4 fw-bold">
                                     Recent Orders
                                 </div>
-                                <ul class="d-flex justify-content-around w-50 align-items-center"
+                                <ul class="d-flex justify-content-around  align-items-center "
                                     style="list-style: none;">
                                     <li class=" bg-light rounded-pill py-1 w-50 row p"><input type="text" name="" id="search"
                                             class="outline-none ps-3   border-none col-8 rounded-pill bg-light" id="">
@@ -79,7 +79,7 @@
                                         </div>
                                     </li>
                                     <li class="px-sm-4 pointer text-end dropdown">
-                                        <img width="30px" src="/img/Filter.png"  alt="" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img class="w-responsive" src="/img/Filter.png"  alt="" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         <ul class="dropdown-menu">
                                             <li><a href="#" class="dropdown-item"><label for="customer-name">customer name</label></a></li>
                                             <li><a href="#" class="dropdown-item"><label for="item-purchased">item purchased</label></a></li>
@@ -89,8 +89,8 @@
                                         </ul>
                                     </li>
                                     <li class="px-sm-4 pointer text-end " data-bs-toggle="modal"
-                                        data-bs-target="#addInvent"><img src="/img/Add.png" width="30px" alt=""></li>
-                                    <li class="px-sm-4 pointer text-end"><img src="/img/Full screen.png" width="30px"
+                                        data-bs-target="#addInvent"><img class="w-responsive" src="/img/Add.png" width="30px" alt=""></li>
+                                    <li class="px-sm-4 pointer text-end d-none d-md-block"><img class="w-responsive" src="/img/Full screen.png" width="30px"
                                             alt=""></li>
                                 </ul>
                             </div>
@@ -111,19 +111,19 @@
 
                                         <% sales.forEach((sale,index)=>{%>
                                             <tr class="<%- index % 2 != 0 ? 'bg-default-blue':'' %>">
-                                                <td class="py-4 px-2"><a
+                                                <td class="py-4 px-2" data-cell="customer name"><a
                                                         href="/api/customers/orders/<%- sale.Customer.customer_id %>"
-                                                        class="text-decoration-none"><%- sale.Customer.first_name %> <%-
+                                                        class="text-decoration-none" ><%- sale.Customer.first_name %> <%-
                                                                 sale.Customer.last_name %> </a></td>
-                                                <td class="py-4 px-2 text-center">
+                                                <td class="py-4 px-2 text-center" data-cell="item purchased">
                                                     <% let myphonees=phones.find(id=> id.phone_id ==
                                                         sale.allitems[0].brand) %> <%- myphonees?.brand %> <%-
                                                                 sale.allitems[0].model %> <%- sale.allitems[0].part %>
                                                                     ...
                                                 </td>
-                                                <td class="py-4 px-2 text-center">ORD-<%- sale.sale_id %></td>
-                                                <td class="py-4 px-2 text-center"><%- sales.createdAt %></td>
-                                                <td class="py-4 px-2 text-center">5,000</td>
+                                                <td class="py-4 px-2 text-center" data-cell="order ID">ORD-<%- sale.sale_id %></td>
+                                                <td class="py-4 px-2 text-center" data-cell="purchased"><%- sales.createdAt %></td>
+                                                <td class="py-4 px-2 text-center" data-cell="Total revenue (#)">5,000</td>
                                                 <!-- <td class="py-4 px-2"><a href="" class="text-decoration-none">view</a></td> -->
                                                 <td class="py-4 px-2 text-center"><a
                                                         href="/api/customers/myorders/<%- sale.sale_id %>"
@@ -228,6 +228,10 @@
             addItems()
         }
 
+        let mytoggler = document.querySelector('.responsive-width')
+        const togglemedia = ()=>{
+            mytoggler.classList.toggle('unresponsive')
+        }
 
         let itemIdCounter = 0; // A counter to give unique IDs to each item
 

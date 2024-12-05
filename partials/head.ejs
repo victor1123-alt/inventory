@@ -42,6 +42,10 @@
         .responsive-width {
             /* width: 100%; */
         }
+
+        .w-responsive {
+            width: 20px;
+        }
     }
 
     @media (max-width:576px) {
@@ -51,9 +55,42 @@
 
         }
 
+        .unresponsive {
+            animation:hide 1s forwards;
+        }
+
+        @keyframes hide {
+            from {
+                opacity:0;
+                width:0
+            }
+            to {
+                opacity:1;
+                width:100%;
+            }
+        }
+
+        .w-responsive {
+            width: 23px;
+        }
+
         .responsive-width {
             width: 0%;
             opacity: 0;
+        }
+
+        th {
+            display: none;
+        }
+
+        td {
+            display: block;
+            text-align: start !important ;
+        }
+
+        td::before {
+            content:attr(data-cell) ": ";
+            font-weight: bold;
         }
     }
 

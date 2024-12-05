@@ -301,7 +301,7 @@ exports.dashboard = async (req,res)=>{
 
 exports.getPhones = async (req, res) => {
     try {
-        const phones = await Phone.findAll();
+        const phones = await Phone.findAll({include:[{model:db.PhoneModel}]});
         console.log(phones);
         
         res.status(200).render('phones',{phones})
@@ -341,14 +341,10 @@ exports.createPhoneBrand = async (req, res) => {
     console.log(req.body);
     
   try {
-    const { name, description } = req.body;
-    const adminactivity = await db.AdminActivity.create({admin_activity:"added inventory",user_id:req.user.user_id})
+    const { brand, description,os } = req.body;
 
-    // Check if the image file exists in the request
-    const imageUrl = req.file ? req.file.filename : null;  // Store the relative file path
-
-    // Create the phone brand with the image URL
-    const phoneBrand = await Phone.create({admin_id:req.user.user_id, brand:name, description, imageUrl });
+    const phoneBrand = await Phone.create({admin_id:req.user.user_id, brand, description, os });
+    const adminactivity = await db.AdminActivity.create({admin_activity:"added inventory",details:"admin added "+brand+" operating system: "+os,user_id:req.user.user_id})
 
     res.status(201).json(phoneBrand);
   } catch (error) {
