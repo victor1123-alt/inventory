@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <style>
+            .card-img-overlay {
+                background-color: #cfe8ff8e;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
+
+            .card:hover .card-img-overlay {
+                opacity: 1;
+                overflow: hidden;
+            }
+
+
+            .card:hover img {
+                transform: scale(110%);
+            }
+
+            img {
+                overflow-x: hidden;
+                transition: 1s all;
+                object-fit: contain;
+                height: 100%;
+            }
+
+            .brand-name {
+                font-size: 1.5rem;
+                color: white;
+                font-weight: bold;
+                text-align: center;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="bg-light w-100" style="min-width: 100%;">
+        <%- include('../partials/navbar.ejs') %>
+            <div class="row mt-5 ">
+                <%- include('../partials/sidebar.ejs') %>
+                    <div class="col min-vh-100 pt-4 ">
+
+                        <div class="container py-5 bg-white mx-3 my-4">
+                            <div class="text-end mb-4">
+                                <div>
+                                    <b>Dashboard ></b><a href="" class="text-decoration-none">Inventory</a>
+                                </div>
+                            </div>
+                            <div
+                                class="row justify-content-center flex-wrap row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 myphonecontainer">
+
+                                <!-- Apple Card -->
+                                <% phones.forEach(phone=>{ %>
+                                    <div class="card me-4" style="width: 18rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-capitalize pb-2"><%- phone.brand %></h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">iphone operating system</h6>
+                                            <div class="card-text py-1"><span class="text-muted fw-bold">description:
+                                                </span><%- phone.description %></div>
+                                            <div class="card-text py-1"><span class="text-muted fw-bold">Amount of model
+                                                    : </span>
+                                                <% const distinctNames=[...new Map(phone.phoneModels.map(item=>
+                                                    [item.name, item])).values()];
+                                                    %> <%- distinctNames.length %>
+                                            </div>
+                                            <div class="card-text py-1 pb-3"><span class="text-muted fw-bold">Amount of
+                                                    parts : </span><%- phone.phoneModels.length %></div>
+
+                                            <div class="d-flex justify-content-between">
+                                                <button class="btn btn-danger w-50 mx-3 delete-btn"
+                                                    data-id="<%- phone.phone_id %>">Delete</button>
+                                                <a href="/api/customers/models/<%- phone.phone_id %>"
+                                                    class="w-50 mx-3 btn btn-primary">view</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <% }) %>
+                            </div>
+                            <div class="d-flex mt-5">
+                                <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addInvent">Add
+                                    Inventory +</div>
+                                <div class="btn btn-primary ms-3" id="refreshButton">refresh</div>
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal w-100 " id="addInvent">
+                <div class="modal-dialog modal-lg  modal-dialog-centered">
+                    <div class="bg-white  container-fluid  p-sm-4 modal-content" style="border-radius: 20px;">
+                        <div class=" text-center fw-bold fs-3 py-3">
+                            Add Phone Brand
+                        </div>
+                        <div class="">
+                            <form action="" name="addPhoneBrand">
+                                <div class="row align-items-baseline">
+                                    <div class="mb-4 col-12">
+                                        <label for="name" class="form-label fw-bold">
+                                            Brand Name</label>
+                                        <input type="text" class="form-control" name="brand"
+                                            aria-labelledby="brand-err">
+                                        <div class="form-text text-danger err" id="brand-err" data-err="brand"></div>
+                                    </div>
+                                    <div class="mb-4 col-12">
+                                        <label for="name" class="form-label fw-bold"> description</label>
+                                        <input type="text" class="form-control" name="description"
+                                            aria-labelledby="description">
+                                        <div class="form-text text-danger err" id="description" data-err="description">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="name" class="form-label fw-bold"> operating system </label>
+                                    <input type="text" class="form-control" name="os" aria-labelledby="os">
+                                    <div class="form-text text-danger err" id="os" data-err="os">
+                                    </div>
+                                </div>
+
+
+                                <div class="text-center px-5">
+                                    <button class="btn btn-primary w-75 ">Add Phone Brand</button>
+                                </div>
+                            </form>
+                            <div class="position-fixed bottom-0 end-0 p-3 " style="z-index: 11000">
+                                <div id="liveToast" class="mytoast d-none modal-content " role="alert"
+                                    aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+                                    <div class="toast-header border-5 border-success">
+                                        <img src="/img/good.png" width="20px" class="rounded me-2" alt="...">
+                                        <strong class="me-auto">success !!!</strong>
+                                    </div>
+                                    <div class="toast-body">
+                                        successfully added a new phone
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please enter your password to confirm the deletion:</p>
+                    <input type="password" class="form-control" id="deletePassword" placeholder="Enter your password">
+                    <div class="text-danger mt-2 d-none" id="passwordError">confirm password to delete</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const phones = <% - JSON.stringify(phones) %>
+            console.log(phones);
+
+    </script>
+    <%- include('../partials/footer.ejs') %>
+
+
+        <script src="/inventory.js" type="module"> </script>
+</body>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+</head>
+
+<body>
+    <div class="bg-light w-100" style="min-width: 100%;">
+        <%- include('../partials/navbar.ejs') %>
+            <div class="row mt-5 ">
+                <%- include('../partials/sidebar.ejs') %>
+                    <div class="col min-vh-100 pt-4">
+                        <div class="bg-white mt-4 mb-4 px-4 mx-4 rounded-3 py-3">
+                            <div class="container mt-5">
+                                <h2 class="mb-4 text-primary">Add Admin</h2>
+                        
+                                <form class="needs-validation" novalidate name="addadmin">
+                                    <!-- Admin Name -->
+                                    <div class="mb-3">
+                                        <label for="adminName" class="form-label">first Name</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="adminName"
+                                            name="first_name"
+                                            placeholder="Enter admin's first name"
+                                            required
+                                        >
+                                        <div class="invalid-feedback">
+                                            Please provide the admin's name.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="adminName" class="form-label">last Name</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="adminName"
+                                            name="last_name"
+                                            placeholder="Enter admin's lastname"
+                                            required
+                                        >
+                                        <div class="invalid-feedback">
+                                            Please provide the admin's name.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="adminName" class="form-label">Phone number</label>
+                                        <input
+                                            type="tel"
+                                            class="form-control"
+                                            id="adminName"
+                                            name="phonenumber"
+                                            placeholder="Enter admin's phone number"
+                                            required
+                                        >
+                                        <div class="invalid-feedback">
+                                            Please provide the admin's name.
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="mb-3">
+                                        <label for="adminName" class="form-label">admin role</label>
+                                        <select
+                                            class="form-control"
+                                            id="adminName"
+                                            name="role"
+                                        >
+                                        <option value="" disabled>select role</option>
+                                        <option value="admin">admin</option>
+                                        <option value="staff">staff</option>
+                                        <option value="user">user</option>
+                                    </select>
+                                        <div class="invalid-feedback">
+                                            Please provide the admin's name.
+                                        </div>
+                                    </div> -->
+
+                                      <div class="mb-3">
+                                        <label for="adminName" class="form-label">Gender</label>
+                                        <select
+                                            class="form-control"
+                                            id="adminName"
+                                            name="gender"
+                                        >
+                                        <option value="" selected class="text-muted" disabled>select gender</option>
+                                        <option value="male">male</option>
+                                        <option value="female">female</option>
+                                    </select>
+                                        <div class="invalid-feedback">
+                                            Please provide the admin's name.
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Admin Email -->
+                                    <div class="mb-3">
+                                        <label for="adminEmail" class="form-label">Email</label>
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            id="adminEmail"
+                                            name="email"
+                                            placeholder="Enter admin's email"
+                                            required
+                                        >
+                                        <div class="invalid-feedback">
+                                            Please provide a valid email address.
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="adminName" class="form-label">address</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="adminName"
+                                            name="address"
+                                            placeholder="Enter admin's physical address"
+                                            required
+                                        >
+                                        <div class="invalid-feedback">
+                                            Please provide the admin's name.
+                                        </div>
+                                    </div>
+                        
+                                    <!-- Admin Password -->
+                                    <div class="mb-3">
+                                        <label for="adminPassword" class="form-label">Password</label>
+                                        <input
+                                            type="password"
+                                            class="form-control"
+                                            id="adminPassword"
+                                            name="password"
+                                            placeholder="Enter a password"
+                                            required
+                                        >
+                                        <div class="invalid-feedback">
+                                            Please provide a password.
+                                        </div>
+                                    </div>
+                        
+                                    <!-- Submit Button -->
+                                    <button type="submit" class="btn btn-primary">Add Admin</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+    <!-- <script src="/main.js" type="module"> </script> -->
+    <script src="/addadmin.js" type="module"></script>
+</body>
+
+</html>

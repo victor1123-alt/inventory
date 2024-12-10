@@ -1,0 +1,113 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+    :root {
+        --default-blue1: #CFE8FF;
+    }
+
+    body {
+        overflow-x: hidden !important;
+        max-width: 100%;
+        /* background-color: red; */
+    }
+
+    .bg-default-blue {
+        background-color: var(--default-blue1);
+    }
+
+    .text-default-blue {
+        color: var(--default-blue1);
+    }
+
+    .border-default-blue {
+        border-color: var(--default-blue1);
+    }
+
+    .border-none {
+        border: none !important;
+    }
+
+    .outline-none {
+        outline: none !important;
+    }
+
+    @media (min-width:576px) {
+        .position-sm-relative {
+            position: relative;
+        }
+
+        .responsive-width {
+            /* width: 100%; */
+        }
+
+        .w-responsive {
+            width: 20px;
+        }
+    }
+
+    @media (max-width:576px) {
+        .position-nr-fixed {
+            position: fixed;
+            height: 100%;
+
+        }
+
+        .unresponsive {
+            animation:hide 1s forwards;
+        }
+
+        @keyframes hide {
+            from {
+                opacity:0;
+                width:0
+            }
+            to {
+                opacity:1;
+                width:100%;
+            }
+        }
+
+        .w-responsive {
+            width: 23px;
+        }
+
+        .responsive-width {
+            width: 0%;
+            opacity: 0;
+        }
+
+        th {
+            display: none;
+        }
+
+        td {
+            display: block;
+            text-align: start !important ;
+        }
+
+        td::before {
+            content:attr(data-cell) ": ";
+            font-weight: bold;
+        }
+    }
+
+    .td,
+    th,
+    tr,
+    tbody,
+    thead {
+        white-space: nowrap;
+
+    }
+
+    .table {
+        overflow-x: auto;
+    }
+
+    .pointer {
+        cursor: pointer;
+    }
+</style>
