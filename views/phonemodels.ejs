@@ -19,18 +19,33 @@
                             <div class="d-flex justify-content-between align-items-baseline">
 
                                 <div class="fs-4 text-primary fw-bold">
-                                    <%- myphone?.brand %>'s phone Brand
+                                    <%- selectedphone?.brand %>'s phone Brand
                                 </div>
                                 <ul class="d-flex justify-content-around w-50 align-items-baseline"
                                     style="list-style: none;">
-                                    <li class=" bg-light rounded-pill py-1 w-50 row p"><input type="text" name=""
-                                            class="outline-none ps-3 border-none col-8 rounded-pill bg-light" id="">
-                                        <div class="col-4 flex-column justify-content-center align-items-center d-flex">
+                                    <li class="bg-light rounded-pill py-1 w-50 row p">
+                                        <input 
+                                            type="text" 
+                                            name="" 
+                                            class="outline-none ps-3 border-none col-8 rounded-pill bg-light" 
+                                            id="search" 
+                                            autofocus="off" 
+                                            autocomplete="off">
+                                        <div class="col-4 search-btn flex-column justify-content-center align-items-center d-flex" id="searchbtn">
                                             <img src="/img/Search.png" alt="">
                                         </div>
                                     </li>
-                                    <input type="hidden" value="<%- myphone?.phone_id %>" id="phone_id">
-                                    <li class="ps-4 pointer text-end "><img width="30px" src="/img/Filter.png" alt="">
+                                    <input type="hidden" value="<%- selectedphone?.phone_id %>" id="phone_id">
+                                    <li class="ps-4 pointer text-end " ><img width="30px"  src="/img/Filter.png" alt="" class="dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" class="dropdown-item"><label for="model">model</label></a></li>
+                                            <li><a href="#" class="dropdown-item"><label for="part">part</label></a></li>
+                                            <li><a href="#" class="dropdown-item"><label
+                                                        for="stock-status">stock-status</label></a></li>
+                                           
+                                        </ul>
                                     </li>
                                     <li class="px-sm-2 pointer text-end " data-bs-toggle="modal"
                                         data-bs-target="#addInvent"><img src="/img/Add.png" width="30px" alt=""></li>
@@ -41,6 +56,7 @@
                                 <table class="table-striped w-100 my-4">
                                     <thead class="">
                                         <tr class="text-primary ">
+                                            <th class="px-2 pb-4">admin</th>
                                             <th class="px-2 pb-4">phone ID</th>
                                             <th class="px-2  pb-4 text-center ">Phone Model</th>
                                             <th class="px-2  pb-4 start text-center">part</th>
@@ -50,8 +66,9 @@
                                     </thead>
                                     <tbody>
 
-                                        <% myphone?.phoneModels?.forEach((phone,index)=>{%>
+                                        <% myphone?.forEach((phone,index)=>{%>
                                             <tr class="<%- index % 2 != 0 ? 'bg-default-blue':'' %>">
+                                                <td class="py-3 mt-3 px-2"><%-phone.User.first_name %> <%-phone.User.first_name %></td>
                                                 <td class="py-3 mt-3 px-2  ">000<%- phone.id %></td>
                                                 <td class="py-3 mt-3 px-2 text-center "> <%- phone.name %></td>
                                                 <td class="py-3 mt-3 px-2 text-center "><%- phone.parts %></td>
@@ -64,7 +81,7 @@
                                                         data-bs-target="#confirmPasswordModal">
                                                         <%- phone.stockstatus == 1 ? "In Stock" : "Out of Stock" %>
                                                     </button>
-                                                </td>
+                                                </td>    
                                                 <td class="py-3 mt-3 px-2 text-center">
                                                     <button 
                                                         class="btn btn-danger btn-sm delete-btn" 
@@ -74,6 +91,7 @@
                                                         <i class="bi bi-trash3"></i>
                                                     </button>
                                                 </td>
+                                            </tr>
                                             <%})%>
 
                                     </tbody>
@@ -207,7 +225,24 @@
             </div>
         </div>
     </div>
-    
+    <form action="" name="filter" class="d-none">
+        <input type="radio" name="filtertype" id="model" value="name">
+        <input type="radio" name="filtertype" id="part" value="part">
+        <input type="radio" name="filtertype" id="stock-status" value="stockstatus">
+        
+    </form>
+    <div class="position-fixed top-0 end-0 p-3 " style="z-index: 11000">
+        <div id="liveToast" class="mytoast d-none modal-content " role="alert" aria-live="assertive" aria-atomic="true"
+            data-bs-autohide="false">
+            <div class="toast-header border-5 border-success">
+                <img src="/img/good.png" width="20px" class="rounded me-2" alt="...">
+                <strong class="me-auto">success !!!</strong>
+            </div>
+            <div class="toast-body">
+                successfully added a new sales record
+            </div>
+        </div>
+    </div>
     
     <%- include('../partials/footer.ejs') %>
     <script src="/phone_model.js" type="module"></script>

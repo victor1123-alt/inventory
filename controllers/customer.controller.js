@@ -84,9 +84,9 @@ exports.PostCustomerOrders = async (req, res) => {
         
         res.status(200).json(sales)
     } catch (error) {
-        console.log(error);
+        console.log({error:error.message});
         
-       error.errors ? res.status(500).json(handleValidationErr(error.errors)) :""
+       error.errors ? res.status(500).json(handleValidationErr(error.errors)) :res.status(500).json({general:true,message:"error uploading sales"})
     }
 };
 
@@ -105,7 +105,7 @@ exports.getSales = async (req,res) =>{
 
 exports.getAllPhones = async (req,res) =>{
     try {
-        const updatedPhone = await Phone.findAll(); // Or any other query to get sales
+        const updatedPhone = await Phone.findAll({include:[{model:db.PhoneModel}]}); // Or any other query to get sales
 
         res.status(200).json(updatedPhone)
     } catch (error) {
@@ -315,16 +315,19 @@ exports.getPhonesModels = async (req, res) => {
      console.log(id);
      
     try {
-        const myphone = await Phone.findOne({
+
+        const selectedphone = await Phone.findOne({where:{phone_id:id}})
+
+        const myphone = await db.PhoneModel.findAll({
             where:{
-                phone_id:id
+                phoneBrandId:id
             },
-            include:[{model:db.PhoneModel},{model:db.Users}]
+            include:[{model:Phone},{model:db.Users}]
         })
         // const phones = await Phone.findAll();
-        console.log({myphone});
+        console.log({myphone,selectedphone});
         
-        res.status(200).render('phonemodels',{myphone})
+        res.status(200).render('phonemodels',{myphone,selectedphone })
     } catch (error) {
         res.status(500).send({ message: error.message }); 
     }
@@ -338,20 +341,49 @@ const customerModel = require("../models/customer.model");
 
 // Create a new phone brand with an uploaded image
 exports.createPhoneBrand = async (req, res) => {
-    console.log(req.body);
-    
-  try {
-    const { brand, description,os } = req.body;
+  
+    try {
+      const { brand, description, os } = req.body;
+  
+      // Validate required fields
+      if (!brand || !description || !os) {
+        return res.status(400).json({ validationerror: true, error: "All fields are required." });
+      }
 
-    const phoneBrand = await Phone.create({admin_id:req.user.user_id, brand, description, os });
-    const adminactivity = await db.AdminActivity.create({admin_activity:"added inventory",details:"admin added "+brand+" operating system: "+os,user_id:req.user.user_id})
-
-    res.status(201).json(phoneBrand);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: 'Error creating phone brand', error: error.message });
-  }
-};
+      console.log({brand,description,os});
+      
+  
+      // Create Phone brand
+      const phoneBrand = await db.phoneBrand.create({
+        admin_id: req.user?.user_id, // Ensure `req.user` is defined
+        brand,
+        description,
+        os,
+      });
+  
+      // Log admin activity
+      await db.AdminActivity.create({
+        admin_activity: "added inventory",
+        details: `Admin added ${brand}, operating system: ${os}`,
+        user_id: req.user?.user_id,
+      });
+  
+      res.status(201).json(phoneBrand);
+    } catch (error) {
+      console.error(error.message);
+  
+      // Handle validation errors gracefully
+      if (error.errors) {
+        return res.status(400).json({
+          validationerror: true,
+          error: handleValidationErr(error.errors),
+        });
+      }
+  
+      // General server error
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
 
 exports.createPhoneModel = async (req,res)=>{
     

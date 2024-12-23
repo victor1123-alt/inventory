@@ -4,7 +4,6 @@
 <head>
     <%- include('../partials/head.ejs') %>
         <style>
-          
             .card-img-overlay {
                 background-color: #cfe8ff8e;
                 opacity: 0;
@@ -55,25 +54,33 @@
                                 </div>
                             </div>
                             <div
-                                class="row justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 myphonecontainer">
+                                class="row justify-content-center flex-wrap row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 myphonecontainer">
 
                                 <!-- Apple Card -->
                                 <% phones.forEach(phone=>{ %>
-                                    <div class="card" style="width: 18rem;">
+                                    <div class="card me-4" style="width: 18rem;">
                                         <div class="card-body">
-                                          <h5 class="card-title text-capitalize pb-2"><%- phone.brand %></h5>
-                                          <h6 class="card-subtitle mb-2 text-muted">iphone operating system</h6>
-                                          <div class="card-text py-1"><span class="text-muted fw-bold">description: </span><%- phone.description %></div>
-                                          <div class="card-text py-1"><span class="text-muted fw-bold">Amount of model : </span><% const distinctNames = [...new Map(phone.phoneModels.map(item => [item.name, item])).values()];
-                                            %> <%- distinctNames.length %></div>
-                                          <div class="card-text py-1 pb-3"><span class="text-muted fw-bold">Amount of parts : </span><%- phone.phoneModels.length %></div>
+                                            <h5 class="card-title text-capitalize pb-2"><%- phone.brand %></h5>
+                                            <h6 class="card-subtitle mb-2 text-muted">iphone operating system</h6>
+                                            <div class="card-text py-1"><span class="text-muted fw-bold">description:
+                                                </span><%- phone.description %></div>
+                                            <div class="card-text py-1"><span class="text-muted fw-bold">Amount of model
+                                                    : </span>
+                                                <% const distinctNames=[...new Map(phone.phoneModels.map(item=>
+                                                    [item.name, item])).values()];
+                                                    %> <%- distinctNames.length %>
+                                            </div>
+                                            <div class="card-text py-1 pb-3"><span class="text-muted fw-bold">Amount of
+                                                    parts : </span><%- phone.phoneModels.length %></div>
 
-                                          <div class="d-flex justify-content-between">
-                                            <button class="btn btn-danger w-50 mx-3 delete-btn" data-id="<%- phone.phone_id %>">Delete</button>
-                                            <div class="w-50 mx-3 btn btn-secondary">view</div>
+                                            <div class="d-flex justify-content-between">
+                                                <button class="btn btn-danger w-50 mx-3 delete-btn"
+                                                    data-id="<%- phone.phone_id %>">Delete</button>
+                                                <a href="/api/customers/models/<%- phone.phone_id %>"
+                                                    class="w-50 mx-3 btn btn-primary">view</a>
+                                            </div>
                                         </div>
-                                        </div>
-                                      </div>
+                                    </div>
 
                                     <% }) %>
                             </div>
@@ -126,7 +133,7 @@
                                 <div id="liveToast" class="mytoast d-none modal-content " role="alert"
                                     aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
                                     <div class="toast-header border-5 border-success">
-                                        <img src="/img/good/png" class="rounded me-2" alt="...">
+                                        <img src="/img/good.png" width="20px" class="rounded me-2" alt="...">
                                         <strong class="me-auto">success !!!</strong>
                                     </div>
                                     <div class="toast-body">
@@ -139,33 +146,35 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <p>Please enter your password to confirm the deletion:</p>
-                      <input type="password" class="form-control" id="deletePassword" placeholder="Enter your password">
-                      <div class="text-danger mt-2 d-none" id="passwordError">confirm password to delete</div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                      <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
-                    </div>  
-                  </div>
+
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-              </div>
+                <div class="modal-body">
+                    <p>Please enter your password to confirm the deletion:</p>
+                    <input type="password" class="form-control" id="deletePassword" placeholder="Enter your password">
+                    <div class="text-danger mt-2 d-none" id="passwordError">confirm password to delete</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
-        const phones = <%- JSON.stringify(phones) %>
-        console.log(phones);
-        
+        const phones = <% - JSON.stringify(phones) %>
+            console.log(phones);
+
     </script>
-        <%- include('../partials/footer.ejs') %>
+    <%- include('../partials/footer.ejs') %>
 
 
-    <script src="/inventory.js" type="module"> </script>
+        <script src="/inventory.js" type="module"> </script>
 </body>

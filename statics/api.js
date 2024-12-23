@@ -66,6 +66,18 @@ function clearinputs (...input) {
 }
 
 
+function showAlert (){
+    document.querySelector('.mytoast').classList.remove('d-none');
+
+   
+}
 
 
-export { name, PostApi,PostFileApi,clearinputs}
+function hideAlert(){
+
+        document.querySelector('.mytoast').classList.add('d-none');
+
+}
+
+
+export { name, PostApi,PostFileApi,clearinputs,showAlert,hideAlert}
