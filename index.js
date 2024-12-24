@@ -16,6 +16,7 @@ app.listen(PORT, () => {
   });
   
 // Import Routes
+app.get('/',(req,res)=>{res.redirect('/api/customers')})
 const customerRoutes = require('./routes/customer.routes');
 const userRoutes = require('./routes/user.routes');
 const { verifyCookies } = require('./middleware/verifyjwt');
