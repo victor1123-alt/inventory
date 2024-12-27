@@ -107,6 +107,7 @@
                                     <thead>
                                         <tr class="text-primary">
                                             <th class="px-2">customer name</th>
+                                            <th class="px-2 text-center">admin</th>
                                             <th class="px-2 text-center">item purchased</th>
                                             <th class="px-2 text-center">order ID</th>
                                             <th class="px-2 text-center">purchased</th>
@@ -123,6 +124,9 @@
                                                             href="/api/customers/orders/<%- sale.Customer.customer_id %>"
                                                             class="text-decoration-none"><%- sale.Customer.first_name %>
                                                                 <%- sale.Customer.last_name %> </a></td>
+                                                    <td class="py-4 px-2" data-cell="admin"> 
+                                                        <%- sale.User.first_name %> <%- sale.User.last_name %>
+                                                    </td>
                                                     <td class="py-4 px-2 text-center" data-cell="item purchased">
                                                         <% let myphonees=phones.find(id=> id.phone_id ==
                                                             sale.allitems[0].brand) %> <%- myphonees?.brand %> <%-
@@ -264,7 +268,7 @@
         function addItems(x) {
             const itemsContainer = document.querySelector(".items");
             const newOrderRow = document.createElement("div");
-            newOrderRow.classList.add("row", "orders", "mb-3", "duplicate");
+            newOrderRow.classList.add("row", "myorders", "mb-3", "duplicate");
 
             if (!x) {
                 newOrderRow.innerHTML = `
